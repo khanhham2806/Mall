@@ -16,7 +16,7 @@ const Login = ({navigation}:any) => {
   }
   const handleOnPressLogin =(e:any)=>{
     e.preventDefault();
-    login()
+    login(username,password)
       
   }
 

@@ -118,5 +118,28 @@ app.get("/profile", authMiddleware.isAuth, async (req, res) => {
   res.send(req.user);
 });
 
+app.get('/product',(req,res)=>{
+  let sql ='SELECT * FROM Product';
+  con.query(sql, (err, response) => {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: response });
+    }
+  });
+})
+
+
+app.get('/news',(req,res)=>{
+  let sql ='SELECT * FROM news';
+  con.query(sql, (err, response) => {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: response });
+    }
+  });
+})
+
 app.listen(port);
 console.log("Server started at http://localhost:" + port);

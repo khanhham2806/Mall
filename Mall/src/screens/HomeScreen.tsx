@@ -5,7 +5,11 @@ import Search from './Search';
 import Slider from '../components/Slider';
 import Category from '../components/Category';
 import Product from '../components/Product';
+import axios from 'axios';
+
+
 const HomeScreen = () => {
+
   return (
     <ScrollView style={styles.container}>
         <StatusBar
@@ -23,18 +27,17 @@ const HomeScreen = () => {
        
 
         
-
+        {/* search */}
         <View style={styles.elementsHeaderContainer}>
-            {/* search */}
             <Search/>
-
-            {/* banner */}
-           <Slider/>
-
-            {/* Category */}
-           <Category/>
-
-           
+        </View>
+        {/* banner */}
+        <View >
+            <Slider/>
+        </View>
+          {/* Category */}
+        <View style={styles.elementsHeaderContainer}>
+             <Category/>
         </View>
 
         <View style={styles.elementsProductContainer} >

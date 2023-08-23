@@ -11,6 +11,7 @@ const Slider = () => {
         pagingEnabled 
         snapToAlignment='center'
         showsHorizontalScrollIndicator={false}
+       
         />
   );
 };
