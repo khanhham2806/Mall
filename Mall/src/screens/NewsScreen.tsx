@@ -30,6 +30,7 @@ const NewsScreen = ({ navigation }: any) => {
         {
           data.map((item: any) => {
             return (
+
               <TouchableOpacity
                 style={[styles.card, { backgroundColor: '#fff', shadowColor: '#000' }]} key={item.id}
                 onPress={() => navigation.navigate('WebViewScreen', { url: item.url })}

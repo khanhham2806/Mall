@@ -5,7 +5,7 @@ import UserScreen from '../screens/UserScreen';
 import OrderScreen from '../screens/OrderScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import NewsStack from './NewsStack';
+import NewsScreen from '../screens/NewsScreen';
 
 const Tab = createBottomTabNavigator()
 
@@ -22,10 +22,10 @@ const TabNav = () => {
           } else if (route.name === 'Order') {
             iconName = 'shopping-bag';
             color = focused ? '#0190f3' : 'gray';
-          } else if (route.name === 'Login') {
-            iconName = 'user';
+          } else if (route.name === 'News') {
+            iconName = 'newspaper-o';
             color = focused ? '#0190f3' : 'gray';
-          } else if (route.name === 'Login') {
+          } else if (route.name === 'User') {
             iconName = 'user';
             color = focused ? '#0190f3' : 'gray';
           }
@@ -35,7 +35,7 @@ const TabNav = () => {
       })}>
       <Tab.Screen name='Home' component={HomeScreen} />
       <Tab.Screen name='Order' component={OrderScreen} />
-      <Tab.Screen name='News' component={NewsStack} />
+      <Tab.Screen name='News' component={NewsScreen} />
       <Tab.Screen name='User' component={UserScreen} />
     </Tab.Navigator>
   );
