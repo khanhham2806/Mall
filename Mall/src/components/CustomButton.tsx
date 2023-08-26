@@ -1,21 +1,23 @@
 import * as React from 'react';
-import { Text, View, StyleSheet,Pressable } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 
 
-const CustomButton = ({onPress,text,bgColor,txtColor}:any) => {
+const CustomButton = ({ width, onPress, text, bgColor, txtColor, borderColor }: any) => {
   return (
-    <Pressable onPress={onPress}
-     style={[
-      styles.container,
-      bgColor ? {backgroundColor:bgColor} :{}
+    <TouchableOpacity onPress={onPress}
+      style={[
+        styles.container,
+        width ? { width: width } : {},
+        bgColor ? { backgroundColor: bgColor } : {},
+        borderColor ? { borderColor: borderColor } : { borderColor: bgColor },
       ]}>
-        <Text 
-        style={[styles.text,
-          txtColor ? {color:txtColor} :{}
-        ]}>{text}
-        </Text>
-    </Pressable>
+      <Text
+        style={
+          txtColor ? { color: txtColor } : {}
+        }>{text}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
@@ -23,13 +25,13 @@ export default CustomButton;
 
 const styles = StyleSheet.create({
   container: {
-    alignItems:'center',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    alignItems: 'center',
     backgroundColor: '#0190f3',
-    paddingVertical:10,
-    borderRadius:10,
+    paddingVertical: 10,
+    borderRadius: 10,
     marginTop: 10
   },
-  text:{
-    color:'#fff',
-  }
+
 });

@@ -118,8 +118,9 @@ app.get("/profile", authMiddleware.isAuth, async (req, res) => {
   res.send(req.user);
 });
 
-app.get('/product',(req,res)=>{
-  let sql ='SELECT * FROM Product';
+// app.get('/product', authMiddleware.isAuth, (req, res) => {
+app.get('/product', (req, res) => {
+  let sql = 'SELECT * FROM Product';
   con.query(sql, (err, response) => {
     if (err) {
       res.send({ status: "error", message: err });
@@ -130,8 +131,8 @@ app.get('/product',(req,res)=>{
 })
 
 
-app.get('/news',(req,res)=>{
-  let sql ='SELECT * FROM news';
+app.get('/news', (req, res) => {
+  let sql = 'SELECT * FROM news';
   con.query(sql, (err, response) => {
     if (err) {
       res.send({ status: "error", message: err });
@@ -140,6 +141,33 @@ app.get('/news',(req,res)=>{
     }
   });
 })
+
+
+app.get('/category', (req, res) => {
+  let sql = 'SELECT * FROM category';
+  con.query(sql, (err, response) => {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: response });
+    }
+  });
+})
+
+app.get('/category/:category', (req, res) => {
+  const { category } = req.params;
+  let sql = 'select * from product  join category where product.category = category.category and product.category = ?';
+  con.query(sql, category, (err, response) => {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: response });
+    }
+  });
+})
+
+
+
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);

@@ -13,25 +13,9 @@ import ProductInfoScreen from './ProductInfoScreen';
 
 const HomeScreen = ({ navigation }: any) => {
   const { userInfo } = useContext(AuthContext);
-  console.log(userInfo.user);
 
   return (
     <ScrollView style={styles.container}>
-      <StatusBar
-        animated={true}
-      />
-      {/* header */}
-      <View style={styles.header}>
-
-        <Text style={{ color: 'blue', textAlignVertical: 'center', textAlign: 'center' }}>Mega Mall</Text>
-
-        <TouchableOpacity style={{ padding: 10, position: 'absolute', right: 0 }}>
-          <FontAwesome name='shopping-cart' size={20} />
-
-        </TouchableOpacity>
-
-      </View>
-
       <View style={styles.hiUser}>
         <Text>Hi, {userInfo.user.FullName}</Text>
 
