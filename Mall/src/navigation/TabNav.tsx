@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import HomeScreen from '../screens/HomeScreen';
-import UserScreen from '../screens/UserScreen';
-import OrderScreen from '../screens/OrderScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import UserScreen from '../screens/UserScreen/UserScreen';
+import OrderScreen from '../screens/OrderScreen/OrderScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import NewsScreen from '../screens/NewsScreen';
+import NewsScreen from '../screens/NewsScreen/NewsScreen';
 
 const Tab = createBottomTabNavigator()
 

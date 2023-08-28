@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { BASE_URL } from '../../config';
+import { BASE_URL } from '../../../config';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Category = () => {
+const ListCategory = () => {
     const navigation = useNavigation()
     const [data, setData] = useState([]);
     useEffect(() => {
@@ -38,7 +38,7 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default ListCategory;
 
 const styles = StyleSheet.create({
     viewContent: {

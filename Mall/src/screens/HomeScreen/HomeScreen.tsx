@@ -2,14 +2,12 @@ import * as React from 'react';
 import { Text, View, StyleSheet, ScrollView, TouchableOpacity, StatusBar, Image, FlatList } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Search from './Search';
-import Slider from '../components/Slider';
-import Category from '../components/Category';
-import Product from '../components/Product';
+import Slider from '../../components/Slider';
+import ListCategory from './ListCategory';
+import ListProduct from './ListProduct';
 import { Avatar } from 'react-native-elements';
-
 import { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import ProductInfoScreen from './ProductInfoScreen';
+import { AuthContext } from '../../context/AuthContext';
 
 const HomeScreen = ({ navigation }: any) => {
   const { userInfo } = useContext(AuthContext);
@@ -30,18 +28,20 @@ const HomeScreen = ({ navigation }: any) => {
       <View style={styles.elementsHeaderContainer}>
         <Search />
       </View>
+
       {/* banner */}
       <View >
         <Slider />
       </View>
+
       {/* Category */}
       <View style={styles.elementsHeaderContainer}>
-        <Category />
+        <ListCategory />
       </View>
 
       <View style={styles.elementsProductContainer} >
         {/* Feature Product */}
-        <Product />
+        <ListProduct />
 
       </View>
 

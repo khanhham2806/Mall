@@ -4,9 +4,9 @@ import { Avatar } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
-import Line from '../components/Line';
-import CustomButton from '../components/CustomButton';
-import BtnGoBack from '../components/BtnGoBack';
+import Line from '../../components/Line';
+import CustomButton from '../../components/CustomButton';
+import BtnGoBack from '../../components/BtnGoBack';
 const width = Dimensions.get('screen').width;
 
 const ProductInfoScreen = ({ route }: any) => {

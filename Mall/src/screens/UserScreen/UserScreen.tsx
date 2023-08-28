@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { AuthContext } from '../context/AuthContext';
-import {useContext} from 'react'
+import { AuthContext } from '../../context/AuthContext';
+import { useContext } from 'react'
 
 
 const UserScreen = () => {
-  const {logout} = useContext(AuthContext);
-  const handleOnPressLogout =()=>{
+  const { logout } = useContext(AuthContext);
+  const handleOnPressLogout = () => {
     logout()
   }
   return (

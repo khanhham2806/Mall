@@ -130,6 +130,19 @@ app.get('/product', (req, res) => {
   });
 })
 
+app.get('/product/:searchQuery', (req, res) => {
+  const { searchQuery } = req.params;
+  const searchQueryLike = '%'.concat(searchQuery, '%');
+  let sql = "select * from product  where product.title like ?"
+  con.query(sql, searchQueryLike, (err, response) => {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: response });
+    }
+  });
+})
+
 
 app.get('/news', (req, res) => {
   let sql = 'SELECT * FROM news';
@@ -165,7 +178,6 @@ app.get('/category/:category', (req, res) => {
     }
   });
 })
-
 
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { WebView } from "react-native-webview";
-import BtnGoBack from "../components/BtnGoBack";
+import BtnGoBack from "../../components/BtnGoBack";
 import { useNavigation } from "@react-navigation/native";
 
 const WebViewScreen = ({ route }: any) => {

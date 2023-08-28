@@ -3,12 +3,13 @@ import { useState, useEffect, } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Avatar } from '@rneui/themed';
 import axios from 'axios';
-import { BASE_URL } from '../../config';
+import { BASE_URL } from '../../../config';
 import { useNavigation } from '@react-navigation/native';
+import ComponentProduct from '../../components/ComponentProduct';
 const width = Dimensions.get('screen').width * 0.43;
 const height = Dimensions.get('screen').height * 0.35;
 
-const Product = () => {
+const ListProduct = () => {
     const navigation = useNavigation();
     const [data, setData] = useState([]);
     useEffect(() => {
@@ -26,19 +27,15 @@ const Product = () => {
             <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', rowGap: 20 }]}>
                 {data.map((item: any) => {
                     return (
-
-                        <TouchableOpacity key={item.productID} style={styles.product}
+                        <ComponentProduct
+                            key={item.productID}
                             onPress={() => navigation.navigate('ProductInfo', { item: item })}
-                        >
-                            <Avatar source={{ uri: item.productImage }} size={width * 0.9} />
-                            <Text style={styles.title}>{item.title}</Text>
-                            <View style={{ width, display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                                <Text style={{ fontSize: 10, color: '#FE3A30' }}>{item.actualPrice + ' VND'}</Text>
-                                <Text style={{ fontSize: 10, textDecorationLine: 'line-through' }}>{item.oldPrice + ' VND'} </Text>
-                                <Text style={{ fontSize: 10 }}>{'-' + item.discount + '%'}</Text>
-                            </View>
-                        </TouchableOpacity>
-
+                            sourceImg={{ uri: item.productImage }}
+                            title={item.title}
+                            actualPrice={item.actualPrice}
+                            oldPrice={item.oldPrice}
+                            discount={item.discount}
+                        />
                     )
 
                 })}
@@ -46,7 +43,7 @@ const Product = () => {
         </View>
     );
 };
-export default Product;
+export default ListProduct;
 
 
 const styles = StyleSheet.create({

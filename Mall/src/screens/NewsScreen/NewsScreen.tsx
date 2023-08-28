@@ -3,7 +3,7 @@ import { ScrollView, Text, View, StyleSheet, TouchableOpacity } from 'react-nati
 import { Avatar } from "react-native-elements"
 import axios from 'axios';
 import { useEffect, useState } from 'react'
-import { BASE_URL } from '../../config';
+import { BASE_URL } from '../../../config';
 
 
 const NewsScreen = ({ navigation }: any) => {
