@@ -1,26 +1,77 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Image } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
 import Line from '../../components/Line';
 import CustomButton from '../../components/CustomButton';
 import BtnGoBack from '../../components/BtnGoBack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native'
+import axios from 'axios';
+import { BASE_URL } from '../../../config';
+import { useState, useEffect } from 'react';
 const width = Dimensions.get('screen').width;
 
 const ProductInfoScreen = ({ route }: any) => {
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
     const { item } = route.params;
-    const handleGoBack = () => {
-        navigation.goBack();
+    // console.log(item);
+    const [product, setProduct] = useState<any>([]);
+
+    useEffect(() => {
+        getData()
+        // }
+    }, [navigation])
+    const getData = async () => {
+        const res = await axios.get(`${BASE_URL}/cart`)
+        // console.log(res.data.data);
+
+        let dataOrder = res && res.data ? res.data.data : [];
+        setProduct(dataOrder);
+
+    }
+    console.log(product);
+
+    const accountID = 1;
+
+    const addToCart = (accountID: any, productID: any,) => {
+        axios.post(`${BASE_URL}/cart`, {
+            accountID, productID
+        })
+            .then(function (response) {
+                console.log('add');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
+    const incrementQuantity = (productID: number) => {
+        axios.put(`${BASE_URL}/cart`, {
+            productID
+        })
+            .then(function (response) {
+                console.log('update');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    const handleAddToCart = (productID: any) => {
+        const listID = product.map((item: any) => item.productID)
+        if (!listID.includes(productID)) {
+            addToCart(accountID, item.productID)
+        } else {
+
+            incrementQuantity(productID)
+        }
+
+    }
     return (
         <>
             <View style={{ backgroundColor: '#fff' }}>
-                <BtnGoBack onPress={handleGoBack} />
-
+                <BtnGoBack />
             </View>
 
             <ScrollView style={{ backgroundColor: '#fff', }}>
@@ -33,14 +84,14 @@ const ProductInfoScreen = ({ route }: any) => {
 
                     </View>
                     <View style={{ margin: 20 }} >
-                        <Text style={styles.title}>{item.title}</Text>
+                        <Text style={styles.title}>{item.productTitle}</Text>
                         <View style={styles.price}>
-                            <Text style={styles.actualPrice}>{item.actualPrice} VND</Text>
-                            <Text style={styles.oldPrice}>{item.oldPrice} VND</Text>
+                            <Text style={styles.actualPrice}>{item.productActualPrice} VND</Text>
+                            <Text style={styles.oldPrice}>{item.productOldPrice} VND</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                             <FontAwesome name='star' size={14} color={'#FFC120'} />
-                            <Text style={styles.rate}>{item.rate}</Text>
+                            <Text style={styles.rate}>{item.productRate}</Text>
                             <Text style={styles.review}>86 Reviews</Text>
                         </View>
                     </View>
@@ -70,7 +121,7 @@ const ProductInfoScreen = ({ route }: any) => {
                 {/* Description */}
                 <View style={{ margin: 20 }}>
                     <Text style={{ fontSize: 16, fontWeight: '600' }}>Description Product</Text>
-                    <Text style={{ fontSize: 14, }}>{item.title}</Text>
+                    <Text style={{ fontSize: 14, }}>{item.productTitle}</Text>
                 </View>
 
                 <Line />
@@ -143,8 +194,10 @@ const ProductInfoScreen = ({ route }: any) => {
 
             </ScrollView >
             <View style={{ backgroundColor: '#fff', paddingHorizontal: 20, paddingBottom: 10, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
-                <CustomButton width='40%' text='Add to cart' bgColor='#3669C9' txtColor='#fff' />
-                <CustomButton width='40%' text='Buy now' bgColor='#FE3A30' txtColor='#fff' />
+
+                <CustomButton onPress={() => handleAddToCart(item.productID)} width='40%' text='Add to cart' bgColor='#3669C9' txtColor='#fff' />
+
+                <CustomButton onPress={() => navigation.navigate('Order')} width='40%' text='Order' bgColor='#FE3A30' txtColor='#fff' />
             </View>
 
         </>

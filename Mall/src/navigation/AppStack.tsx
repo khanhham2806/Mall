@@ -5,6 +5,7 @@ import TabNav from './TabNav';
 import ProductInfoScreen from '../screens/HomeScreen/ProductInfoScreen';
 import WebViewScreen from '../screens/NewsScreen/WebViewScreen';
 import CategoryScreen from '../screens/HomeScreen/CategoryScreen';
+import SearchProductScreen from '../screens/HomeScreen/SearchProductScreen';
 
 const Stack = createNativeStackNavigator();
 const AppStack = () => {
@@ -14,6 +15,7 @@ const AppStack = () => {
             <Stack.Screen name="WebViewScreen" component={WebViewScreen} />
             <Stack.Screen name="ProductInfo" component={ProductInfoScreen} />
             <Stack.Screen name="CategoryScreen" component={CategoryScreen} />
+            <Stack.Screen name="SearchProduct" component={SearchProductScreen} />
         </Stack.Navigator>
     </>
     );

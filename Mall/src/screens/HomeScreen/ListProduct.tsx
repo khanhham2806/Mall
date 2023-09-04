@@ -10,17 +10,22 @@ const width = Dimensions.get('screen').width * 0.43;
 const height = Dimensions.get('screen').height * 0.35;
 
 const ListProduct = () => {
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
     const [data, setData] = useState([]);
     useEffect(() => {
-        const getData = async () => {
-            const res = await axios.get(`${BASE_URL}/product`)
-            let dataProducts = res && res.data ? res.data.data : [];
-            setData(dataProducts);
-        }
-
+        // const unsub = navigation.addListener('focus', () => {
         getData()
+        // })
+        // }, [navigation]);
     }, []);
+
+    const getData = async () => {
+        const res = await axios.get(`${BASE_URL}/product`)
+        let dataProducts = res && res.data ? res.data.data : [];
+        setData(dataProducts);
+    }
+    // console.log(data);
+
     return (
         <View>
             <Text style={styles.viewContent}>Products</Text>
@@ -31,10 +36,11 @@ const ListProduct = () => {
                             key={item.productID}
                             onPress={() => navigation.navigate('ProductInfo', { item: item })}
                             sourceImg={{ uri: item.productImage }}
-                            title={item.title}
-                            actualPrice={item.actualPrice}
-                            oldPrice={item.oldPrice}
-                            discount={item.discount}
+                            title={item.productTitle}
+                            actualPrice={item.productActualPrice}
+                            oldPrice={item.productOldPrice}
+                            discount={item.productDiscount}
+                            inCart={item.inCart}
                         />
                     )
 

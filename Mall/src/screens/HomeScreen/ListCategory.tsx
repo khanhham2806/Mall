@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const ListCategory = () => {
-    const navigation = useNavigation()
+    const navigation: any = useNavigation();
     const [data, setData] = useState([]);
     useEffect(() => {
         const getData = async () => {
@@ -27,7 +27,7 @@ const ListCategory = () => {
                             onPress={() => navigation.navigate('CategoryScreen', { item: item })}
                             style={{ padding: 10, alignItems: 'center' }}>
                             <Image source={{ uri: item.categoryImage }} style={{ width: 45, height: 45, resizeMode: 'contain' }} />
-                            <Text>{item.title}</Text>
+                            <Text>{item.categoryTitle}</Text>
                         </TouchableOpacity>
                     )
 

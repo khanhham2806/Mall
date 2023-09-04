@@ -1,41 +1,68 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 import { BASE_URL } from '../../../config';
-
+import { useNavigation } from '@react-navigation/native';
+import { Avatar } from 'react-native-elements';
 const Search = () => {
+  const navigation: any = useNavigation();
   const [searchQuery, setSearchQuery] = useState('')
-  // console.log(searchQuery);
   const [data, setData] = useState([]);
 
   const handleOnChangeSearch = (query: string) => {
-    setSearchQuery(query)
+    if (!query.startsWith(' ')) {
+      setSearchQuery(query);
+    }
+  }
+  const handleOnSubmitEditing = () => {
+    navigation.navigate('SearchProduct', { data: results, searchQuery: searchQuery })
   }
   const handleOnPressSearch = () => {
-    console.log(searchQuery);
+    navigation.navigate('SearchProduct', { data: results, searchQuery: searchQuery })
   }
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get(`${BASE_URL}/product/${searchQuery}`)
-      // console.log(res.data.data);
-
+      const res = await axios.get(`${BASE_URL}/product`)
       let dataProducts = res && res.data ? res.data.data : [];
       setData(dataProducts);
-      // console.log(dataProducts);
 
     }
-
     getData()
-  }, [searchQuery]);
+  }, []);
+
+  const results = data.filter((result: any) => {
+    return result && result.productTitle.toLowerCase().includes(searchQuery.toLowerCase()) || result.productCategory.toLowerCase().includes(searchQuery.toLowerCase())
+  })
+
   return (
-    <View style={styles.input}>
-      <TextInput onChangeText={handleOnChangeSearch} value={searchQuery} placeholder='Search' style={styles.textInput} />
-      <TouchableOpacity onPress={handleOnPressSearch} style={{ flex: 1 }}>
-        <FontAwesome name='search' style={styles.btnInput} size={20} />
-      </TouchableOpacity>
-    </View>
+    <View style={{}}>
+      <View style={styles.input}>
+        <TextInput onChangeText={handleOnChangeSearch} onSubmitEditing={handleOnSubmitEditing} value={searchQuery} placeholder='Search' style={styles.textInput} />
+        <TouchableOpacity onPress={handleOnPressSearch} style={{ flex: 1 }}>
+          <FontAwesome name='search' style={styles.btnInput} size={20} />
+        </TouchableOpacity>
+      </View>
+      {(searchQuery !== '')
+        ?
+        <ScrollView nestedScrollEnabled={true} style={{ zIndex: 100, width: '100%', height: 250, backgroundColor: '#ededed', borderRadius: 10, marginTop: 5 }}>
+          {results.map((item: any) => {
+            return (
+              <View style={{ marginHorizontal: 10, marginVertical: 5 }} key={item.productID}>
+                <TouchableOpacity onPress={() => navigation.navigate('ProductInfo', { item: item })} style={{ borderRadius: 10, backgroundColor: '#fff', padding: 5, flexDirection: 'row', alignItems: 'center' }}>
+                  <Avatar source={{ uri: item.productImage }} />
+                  <Text style={{ marginLeft: 10 }}>{item.productTitle}</Text>
+                </TouchableOpacity>
+              </View>
+            )
+          })}
+        </ScrollView>
+        :
+        <></>
+      }
+
+    </View >
   );
 };
 

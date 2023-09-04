@@ -9,6 +9,7 @@ const { db } = require("./db");
 const router = require("./auth/auth.routes");
 const dotenv = require("dotenv");
 const authMiddleware = require("./auth/auth.middlewares");
+const { log } = require("console");
 app.use(express.json());
 const port = process.env.PORT || 8080;
 
@@ -130,11 +131,10 @@ app.get('/product', (req, res) => {
   });
 })
 
-app.get('/product/:searchQuery', (req, res) => {
-  const { searchQuery } = req.params;
-  const searchQueryLike = '%'.concat(searchQuery, '%');
-  let sql = "select * from product  where product.title like ?"
-  con.query(sql, searchQueryLike, (err, response) => {
+app.get('/product/:id', (req, res) => {
+  const { id } = req.params;
+  let sql = 'SELECT * FROM Product where productID= ?';
+  con.query(sql, id, (err, response) => {
     if (err) {
       res.send({ status: "error", message: err });
     } else {
@@ -142,6 +142,20 @@ app.get('/product/:searchQuery', (req, res) => {
     }
   });
 })
+// app.get('/product/:searchQuery', (req, res) => {
+//   const { searchQuery } = req.params;
+//   const searchQueryLike = '%'.concat(searchQuery, '%');
+//   let sql = "select * from product  where product.title like ?"
+//   con.query(sql, searchQueryLike, (err, response) => {
+
+//     if (err) {
+//       res.send({ status: "error", message: err });
+//     } else {
+//       res.send({ status: "success", data: response });
+//     }
+//   });
+// })
+
 
 
 app.get('/news', (req, res) => {
@@ -169,7 +183,7 @@ app.get('/category', (req, res) => {
 
 app.get('/category/:category', (req, res) => {
   const { category } = req.params;
-  let sql = 'select * from product  join category where product.category = category.category and product.category = ?';
+  let sql = 'select * from product  join category where product.productCategory = category.category and category.category = ?';
   con.query(sql, category, (err, response) => {
     if (err) {
       res.send({ status: "error", message: err });
@@ -178,6 +192,56 @@ app.get('/category/:category', (req, res) => {
     }
   });
 })
+
+
+
+app.post('/cart', (req, res) => {
+  let sql = `INSERT INTO cart set  ? `;
+  const values = req.body
+  console.log(values);
+  con.query(sql, values, function (err) {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: sql });
+    }
+  });
+})
+
+app.get('/cart', (req, res) => {
+  let sql = 'select * from cart  join product where product.productID = cart.productID';
+  con.query(sql, (err, response) => {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: response });
+    }
+  });
+})
+
+app.put('/cart', (req, res) => {
+  const { productID } = req.body
+  let sql = 'update cart set productQuantity = productQuantity +1 where productID =?';
+  con.query(sql, productID, (err, response) => {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: response });
+    }
+  });
+})
+app.delete('/cart/:cartID', function (req, res) {
+  const { cartID } = req.params;
+  console.log(cartID);
+  let sql = `DELETE FROM Cart WHERE cartID = ? `;
+  con.query(sql, cartID, function (err) {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: sql });
+    }
+  });
+});
 
 
 

@@ -5,14 +5,13 @@ import banners from '../assets/data/banner';
 
 const Slider = () => {
   return (
-        <FlatList data={banners} 
-        renderItem={({item})=><SlideItem item={item}/>} 
-        horizontal 
-        pagingEnabled 
-        snapToAlignment='center'
-        showsHorizontalScrollIndicator={false}
-       
-        />
+    <FlatList data={banners}
+      renderItem={({ item }) => <SlideItem item={item} />}
+      horizontal
+      pagingEnabled
+      snapToAlignment='center'
+      showsHorizontalScrollIndicator={false}
+    />
   );
 };
 

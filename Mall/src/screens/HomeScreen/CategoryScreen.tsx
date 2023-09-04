@@ -11,10 +11,7 @@ const height = Dimensions.get('screen').height * 0.35;
 
 
 const CategoryScreen = ({ route }: any) => {
-    const navigation = useNavigation()
-    const hanldeGoBack = () => {
-        navigation.goBack()
-    }
+    const navigation: any = useNavigation();
     let { item } = route.params;
     // console.log(item.category);
 
@@ -36,12 +33,12 @@ const CategoryScreen = ({ route }: any) => {
     return (
         <>
             <View style={{ flexDirection: "row", alignItems: 'center' }}>
-                <BtnGoBack onPress={hanldeGoBack} />
+                <BtnGoBack />
                 <Text style={{
                     fontWeight: 'bold',
                     fontSize: 18,
                     marginLeft: 70
-                }}>Category: {item.title}</Text>
+                }}>Category: {item.categoryTitle}</Text>
             </View>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', rowGap: 20 }]}>
@@ -51,10 +48,10 @@ const CategoryScreen = ({ route }: any) => {
                                 key={item.productID}
                                 onPress={() => navigation.navigate('ProductInfo', { item: item })}
                                 sourceImg={{ uri: item.productImage }}
-                                title={item.title}
-                                actualPrice={item.actualPrice}
-                                oldPrice={item.oldPrice}
-                                discount={item.discount}
+                                title={item.productTitle}
+                                actualPrice={item.productActualPrice}
+                                oldPrice={item.productOldPrice}
+                                discount={item.productDiscount}
                             />
                         )
 

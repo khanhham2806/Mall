@@ -13,10 +13,9 @@ const HomeScreen = ({ navigation }: any) => {
   const { userInfo } = useContext(AuthContext);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView nestedScrollEnabled={false} style={styles.container}>
       <View style={styles.hiUser}>
         <Text>Hi, {userInfo.user.FullName}</Text>
-
         <Avatar
           size={30}
           source={{ uri: userInfo.user.AvatarImageName }}
@@ -54,7 +53,8 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    position: 'relative'
   },
   hiUser: {
     paddingHorizontal: 20,
