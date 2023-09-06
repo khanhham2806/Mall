@@ -6,6 +6,9 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { BASE_URL } from '../../../config';
 import ComponentProduct from '../../components/ComponentProduct';
+import BtnGoCart from '../../components/BtnGoCart';
+import VND from '../../components/VND';
+
 const width = Dimensions.get('screen').width * 0.43;
 const height = Dimensions.get('screen').height * 0.35;
 
@@ -32,13 +35,13 @@ const CategoryScreen = ({ route }: any) => {
 
     return (
         <>
-            <View style={{ flexDirection: "row", alignItems: 'center' }}>
+            <View style={{ padding: 10, flexDirection: "row", alignItems: 'center', justifyContent: 'space-between' }}>
                 <BtnGoBack />
                 <Text style={{
                     fontWeight: 'bold',
                     fontSize: 18,
-                    marginLeft: 70
                 }}>Category: {item.categoryTitle}</Text>
+                <BtnGoCart />
             </View>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', rowGap: 20 }]}>
@@ -49,8 +52,8 @@ const CategoryScreen = ({ route }: any) => {
                                 onPress={() => navigation.navigate('ProductInfo', { item: item })}
                                 sourceImg={{ uri: item.productImage }}
                                 title={item.productTitle}
-                                actualPrice={item.productActualPrice}
-                                oldPrice={item.productOldPrice}
+                                actualPrice={VND.format(item.productActualPrice)}
+                                oldPrice={VND.format(item.productOldPrice)}
                                 discount={item.productDiscount}
                             />
                         )

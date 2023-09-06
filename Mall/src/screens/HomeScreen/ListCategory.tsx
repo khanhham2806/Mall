@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { BASE_URL } from '../../../config';
 import { useState, useEffect } from 'react';
@@ -20,7 +20,7 @@ const ListCategory = () => {
     return (
         <View>
             <Text style={styles.viewContent}>Categories</Text>
-            <View style={[{ flexDirection: 'row', justifyContent: 'space-around', gap: 5 }]}>
+            {/* <View style={[{ flexDirection: 'row', justifyContent: 'space-around', gap: 5 }]}>
                 {data.map((item: any) => {
                     return (
                         <TouchableOpacity key={item.categoryID}
@@ -32,7 +32,28 @@ const ListCategory = () => {
                     )
 
                 })}
+            </View> */}
+            <View style={[{ flexDirection: 'row', justifyContent: 'space-around' }]}>
+                <FlatList
+                    horizontal
+                    data={data}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(item: any) => item.categoryID}
+                    renderItem={({ item }: any) => {
+                        return (
+                            <TouchableOpacity key={item.categoryID}
+                                onPress={() => navigation.navigate('CategoryScreen', { item: item })}
+                                style={{ marginHorizontal: 10, padding: 10, alignItems: 'center' }}>
+                                <Image source={{ uri: item.categoryImage }} style={{ width: 50, height: 50, resizeMode: 'contain' }} />
+                                <Text>{item.categoryTitle}</Text>
+                            </TouchableOpacity>
+                        )
+                    }}>
+
+
+                </FlatList>
             </View>
+
         </View >
 
     );

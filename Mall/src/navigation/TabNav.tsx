@@ -19,9 +19,6 @@ const TabNav = () => {
           if (route.name === 'Home') {
             iconName = 'home';
             color = focused ? '#0190f3' : 'gray';
-          } else if (route.name === 'Order') {
-            iconName = 'shopping-bag';
-            color = focused ? '#0190f3' : 'gray';
           } else if (route.name === 'News') {
             iconName = 'newspaper-o';
             color = focused ? '#0190f3' : 'gray';
@@ -34,7 +31,6 @@ const TabNav = () => {
         headerShown: false
       })}>
       <Tab.Screen name='Home' component={HomeScreen} />
-      <Tab.Screen name='Order' component={OrderScreen} />
       <Tab.Screen name='News' component={NewsScreen} />
       <Tab.Screen name='User' component={UserScreen} />
     </Tab.Navigator>

@@ -219,9 +219,20 @@ app.get('/cart', (req, res) => {
   });
 })
 
-app.put('/cart', (req, res) => {
+app.put('/cart/increment', (req, res) => {
   const { productID } = req.body
   let sql = 'update cart set productQuantity = productQuantity +1 where productID =?';
+  con.query(sql, productID, (err, response) => {
+    if (err) {
+      res.send({ status: "error", message: err });
+    } else {
+      res.send({ status: "success", data: response });
+    }
+  });
+})
+app.put('/cart/decrement', (req, res) => {
+  const { productID } = req.body
+  let sql = 'update cart set productQuantity = productQuantity -1 where productID =?';
   con.query(sql, productID, (err, response) => {
     if (err) {
       res.send({ status: "error", message: err });

@@ -37,7 +37,7 @@ const Search = () => {
   })
 
   return (
-    <View style={{}}>
+    <View style={{ position: 'relative' }}>
       <View style={styles.input}>
         <TextInput onChangeText={handleOnChangeSearch} onSubmitEditing={handleOnSubmitEditing} value={searchQuery} placeholder='Search' style={styles.textInput} />
         <TouchableOpacity onPress={handleOnPressSearch} style={{ flex: 1 }}>
@@ -46,7 +46,7 @@ const Search = () => {
       </View>
       {(searchQuery !== '')
         ?
-        <ScrollView nestedScrollEnabled={true} style={{ zIndex: 100, width: '100%', height: 250, backgroundColor: '#ededed', borderRadius: 10, marginTop: 5 }}>
+        <ScrollView nestedScrollEnabled={true} style={{ position: 'absolute', top: 50, zIndex: 100, width: '100%', maxHeight: 150, padding: 10, backgroundColor: '#ededed', borderRadius: 10, marginTop: 5 }}>
           {results.map((item: any) => {
             return (
               <View style={{ marginHorizontal: 10, marginVertical: 5 }} key={item.productID}>

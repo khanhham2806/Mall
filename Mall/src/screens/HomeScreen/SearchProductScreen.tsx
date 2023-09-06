@@ -4,6 +4,7 @@ import ComponentProduct from '../../components/ComponentProduct';
 import { useNavigation } from '@react-navigation/native';
 import BtnGoBack from '../../components/BtnGoBack';
 import { Avatar } from 'react-native-elements';
+import BtnGoCart from '../../components/BtnGoCart';
 const width = Dimensions.get('screen').width * 0.43;
 const height = Dimensions.get('screen').height * 0.35;
 
@@ -15,13 +16,13 @@ const SearchProductScreen = ({ route }: any) => {
     (data.length !== 0)
       ?
       <>
-        <View style={{ flexDirection: "row", alignItems: 'center' }}>
+        <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-between', margin: 10 }}>
           <BtnGoBack />
           <Text style={{
             fontWeight: 'bold',
             fontSize: 18,
-            marginLeft: 70
           }}>Searching for "{searchQuery}"</Text>
+          <BtnGoCart />
         </View>
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
           <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', rowGap: 20 }]}>

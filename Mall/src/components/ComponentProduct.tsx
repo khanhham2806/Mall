@@ -16,8 +16,8 @@ const ComponentProduct = ({ onPress, sourceImg, title, actualPrice, oldPrice, di
             <Avatar source={sourceImg} size={width * 0.9} />
             <Text style={styles.title}>{title}</Text>
             <View style={{ width, display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                <Text style={{ fontSize: 10, color: '#FE3A30' }}>{actualPrice + ' VND'}</Text>
-                <Text style={{ fontSize: 10, textDecorationLine: 'line-through' }}>{oldPrice + ' VND'} </Text>
+                <Text style={{ fontSize: 10, color: '#FE3A30' }}>{actualPrice}</Text>
+                <Text style={{ fontSize: 10, textDecorationLine: 'line-through' }}>{oldPrice} </Text>
                 <Text style={{ fontSize: 10 }}>{'-' + discount + '%'}</Text>
             </View>
         </TouchableOpacity>
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     title: {
         padding: 5,
         fontWeight: 'bold',
-        marginVertical: 10
+        marginVertical: 10,
+        height: 50
     }
 });

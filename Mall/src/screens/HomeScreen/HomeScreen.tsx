@@ -8,6 +8,8 @@ import ListProduct from './ListProduct';
 import { Avatar } from 'react-native-elements';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import BtnGoCart from '../../components/BtnGoCart';
+import BtnGoChat from '../../components/BtnGoChat';
 
 const HomeScreen = ({ navigation }: any) => {
   const { userInfo } = useContext(AuthContext);
@@ -15,12 +17,17 @@ const HomeScreen = ({ navigation }: any) => {
   return (
     <ScrollView nestedScrollEnabled={false} style={styles.container}>
       <View style={styles.hiUser}>
-        <Text>Hi, {userInfo.user.FullName}</Text>
-        <Avatar
-          size={30}
-          source={{ uri: userInfo.user.AvatarImageName }}
-        />
-
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Avatar
+            size={30}
+            source={{ uri: userInfo.user.AvatarImageName }}
+          />
+          <Text style={{ marginLeft: 10 }}>Hi, {userInfo.user.FullName}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+          <BtnGoChat />
+          <BtnGoCart />
+        </View>
       </View>
 
       {/* search */}

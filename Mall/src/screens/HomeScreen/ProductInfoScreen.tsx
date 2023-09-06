@@ -1,82 +1,67 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Image } from 'react-native';
-import { Avatar } from 'react-native-elements';
+import { Avatar, Badge } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Line from '../../components/Line';
 import CustomButton from '../../components/CustomButton';
 import BtnGoBack from '../../components/BtnGoBack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 import axios from 'axios';
 import { BASE_URL } from '../../../config';
 import { useState, useEffect } from 'react';
+import BtnGoCart from '../../components/BtnGoCart';
+import VND from '../../components/VND';
+import { addToCart, incrementQuantity } from '../../function/cart';
+
 const width = Dimensions.get('screen').width;
+
+
 
 const ProductInfoScreen = ({ route }: any) => {
     const navigation: any = useNavigation();
     const { item } = route.params;
-    // console.log(item);
     const [product, setProduct] = useState<any>([]);
-
+    const [isLoading, setIsLoading] = useState(false)
+    // console.log('isloading', isLoading);
+    const isFocused = useIsFocused();
     useEffect(() => {
-        getData()
-        // }
-    }, [navigation])
+        setIsLoading(true)
+        if (isFocused) {
+            getData()
+        }
+    }, [isLoading, isFocused])
+
     const getData = async () => {
         const res = await axios.get(`${BASE_URL}/cart`)
         // console.log(res.data.data);
-
-        let dataOrder = res && res.data ? res.data.data : [];
-        setProduct(dataOrder);
-
+        let dataCart = res && res.data ? res.data.data : [];
+        setProduct(dataCart);
+        // setIsLoading(false)
     }
-    console.log(product);
+    // console.log(product);
 
     const accountID = 1;
-
-    const addToCart = (accountID: any, productID: any,) => {
-        axios.post(`${BASE_URL}/cart`, {
-            accountID, productID
-        })
-            .then(function (response) {
-                console.log('add');
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-    const incrementQuantity = (productID: number) => {
-        axios.put(`${BASE_URL}/cart`, {
-            productID
-        })
-            .then(function (response) {
-                console.log('update');
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
     const handleAddToCart = (productID: any) => {
+        setIsLoading(true)
         const listID = product.map((item: any) => item.productID)
+        // console.log('list', listID);
         if (!listID.includes(productID)) {
             addToCart(accountID, item.productID)
+
         } else {
-
             incrementQuantity(productID)
-        }
 
+        }
+        setIsLoading(false)
     }
     return (
         <>
-            <View style={{ backgroundColor: '#fff' }}>
+            <View style={{ padding: 10, backgroundColor: '#fff', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <BtnGoBack />
+                <BtnGoCart />
             </View>
 
             <ScrollView style={{ backgroundColor: '#fff', }}>
-
-
                 {/* Image,Price */}
                 <View >
                     <View style={{ alignItems: 'center', position: 'relative' }}>
@@ -86,8 +71,8 @@ const ProductInfoScreen = ({ route }: any) => {
                     <View style={{ margin: 20 }} >
                         <Text style={styles.title}>{item.productTitle}</Text>
                         <View style={styles.price}>
-                            <Text style={styles.actualPrice}>{item.productActualPrice} VND</Text>
-                            <Text style={styles.oldPrice}>{item.productOldPrice} VND</Text>
+                            <Text style={styles.actualPrice}>{VND.format(item.productActualPrice)}</Text>
+                            <Text style={styles.oldPrice}>{VND.format(item.productOldPrice)}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                             <FontAwesome name='star' size={14} color={'#FFC120'} />
@@ -204,7 +189,6 @@ const ProductInfoScreen = ({ route }: any) => {
 
     );
 };
-
 export default ProductInfoScreen;
 
 const styles = StyleSheet.create({
