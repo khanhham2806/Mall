@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-interface LineProps { }
 
-const Line = (props: LineProps) => {
+const Line = ({ marginHorizontal }: any) => {
     return (
-        <View style={styles.container}>
-        </View>
+        <View style={[styles.container, marginHorizontal ? { marginHorizontal: marginHorizontal } : { marginHorizontal: 20 }]}>
+        </View >
     );
 };
 
@@ -17,7 +16,6 @@ const styles = StyleSheet.create({
         borderColor: '#EDEDED',
         borderWidth: 1,
         borderStyle: 'solid',
-        marginHorizontal: 20
     }
 });
 

@@ -7,6 +7,7 @@ import { BASE_URL } from '../../../config';
 import { useNavigation } from '@react-navigation/native';
 import ComponentProduct from '../../components/ComponentProduct';
 import VND from '../../components/VND';
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 
 
@@ -16,41 +17,86 @@ const height = Dimensions.get('screen').height * 0.35;
 const ListProduct = () => {
     const navigation: any = useNavigation();
     const [data, setData] = useState([]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordsPerPage = 6;
+    const lastIndex = currentPage * recordsPerPage;
+    const firstIndex = lastIndex - recordsPerPage;
+    const records = data.slice(firstIndex, lastIndex);
+    const npage = Math.ceil(data.length / recordsPerPage)
+    const number = [...Array(npage + 1).keys()].slice(1)
+    // console.log(number);
+    const handlePrevPage = () => {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+    const handleNextPage = () => {
+        if (currentPage != npage) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
+    const handleChangePage = (id: any) => {
+        setCurrentPage(id)
+
+    }
+
     useEffect(() => {
         // const unsub = navigation.addListener('focus', () => {
         getData()
         // })
         // }, [navigation]);
     }, []);
+    // console.log(data);
 
     const getData = async () => {
         const res = await axios.get(`${BASE_URL}/product`)
         let dataProducts = res && res.data ? res.data.data : [];
         setData(dataProducts);
     }
-    console.log(data);
+
 
     return (
         <View>
             <Text style={styles.viewContent}>Products</Text>
             <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', rowGap: 20 }]}>
-                {data.map((item: any, index: any) => {
+                {records.map((item: any, index: any) => {
+                    // console.log(item);
+
+                    const arrLinkImage = item.productImageUrlEnd.split(',')
+
                     return (
                         <ComponentProduct
-                            key={item.productID}
+                            key={index}
                             onPress={() => navigation.navigate('ProductInfo', { item: item })}
-                            sourceImg={{ uri: item.productImage }}
+                            sourceImg={{ uri: item.productImageUrlStart.concat(arrLinkImage[0]) }}
                             title={item.productTitle}
                             actualPrice={VND.format(item.productActualPrice)}
                             oldPrice={VND.format(item.productOldPrice)}
-                            discount={item.productDiscount}
+                            discount={+((item.productOldPrice - item.productActualPrice) / item.productOldPrice).toFixed(2) * 100}
                             inCart={item.inCart}
                         />
                     )
                 })}
             </View>
+            <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <Pressable style={{ margin: 5, padding: 5, borderWidth: 1, width: 30, height: 30 }} onPress={handlePrevPage} >
+                    <Ionicons name='chevron-back-outline' size={15} />
+                </Pressable>
+                {number.map((n, i) => {
+                    return (
+                        <Pressable onPress={() => handleChangePage(n)} key={i} style={{ margin: 5, alignItems: 'center', paddingTop: 3, width: 30, height: 30, borderWidth: 1 }}>
+                            <Text>{n}</Text>
+                        </Pressable>
+                    )
+                })}
+                <Pressable style={{ margin: 5, padding: 5, borderWidth: 1, width: 30, height: 30 }} onPress={handleNextPage}>
+                    <Ionicons name='chevron-forward-outline' size={15} />
+                </Pressable>
+            </View>
 
-        </View>
+        </View >
+
     );
 };
 export default ListProduct;

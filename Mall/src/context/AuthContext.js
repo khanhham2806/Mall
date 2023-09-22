@@ -6,7 +6,7 @@ import { BASE_URL } from "../../config";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
+    const [role, setRole] = useState('')
     const [isLoading, setIsLoading] = useState(false);
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
@@ -15,8 +15,10 @@ export const AuthProvider = ({ children }) => {
         axios.post(`${BASE_URL}/auth/login`, {
             username,
             password
+
         }).then(res => {
             let userInfo = res.data;
+            console.log(userInfo);
             setUserInfo(userInfo);
             setUserToken(userInfo.accessToken)
             AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));

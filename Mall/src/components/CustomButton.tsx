@@ -3,18 +3,19 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 
 
-const CustomButton = ({ width, onPress, text, bgColor, txtColor, borderColor }: any) => {
+const CustomButton = ({ width, onPress, text, bgColor, txtColor, borderColor, height, margin }: any) => {
   return (
     <TouchableOpacity onPress={onPress}
       style={[
         styles.container,
         width ? { width: width } : {},
-        bgColor ? { backgroundColor: bgColor } : {},
-        borderColor ? { borderColor: borderColor } : { borderColor: bgColor },
+        height ? { height: height } : {},
+        bgColor ? { backgroundColor: bgColor } : { backgroundColor: '#3669C9' },
+        margin ? { margin: margin } : {},
       ]}>
       <Text
         style={
-          txtColor ? { color: txtColor } : {}
+          txtColor ? { color: txtColor } : { color: '#fff' }
         }>{text}
       </Text>
     </TouchableOpacity>
@@ -25,13 +26,9 @@ export default CustomButton;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderStyle: 'solid',
     alignItems: 'center',
-    backgroundColor: '#0190f3',
     paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 10
+    borderRadius: 5
   },
 
 });

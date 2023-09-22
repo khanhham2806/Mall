@@ -1,21 +1,46 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity, StatusBar, Image, FlatList } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity, StatusBar, Image, FlatList, SafeAreaView } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Search from './Search';
 import Slider from '../../components/Slider';
 import ListCategory from './ListCategory';
 import ListProduct from './ListProduct';
 import { Avatar } from 'react-native-elements';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import BtnGoCart from '../../components/BtnGoCart';
 import BtnGoChat from '../../components/BtnGoChat';
 
+import axios from 'axios';
+import { BASE_URL } from '../../../config';
+import { useNavigation, useIsFocused } from '@react-navigation/native'
+
 const HomeScreen = ({ navigation }: any) => {
   const { userInfo } = useContext(AuthContext);
+  const [productCart, setProductCart] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(false)
+  const isFocused = useIsFocused();
+
+  // console.log('isloading', isLoading);
+  // const isFocused = useIsFocused();
+  useEffect(() => {
+    setIsLoading(true)
+    if (isFocused) {
+      getData()
+    }
+  }, [isLoading, isFocused])
+  const getData = async () => {
+    const res = await axios.get(`${BASE_URL}/cart`)
+    // console.log(res.data.data);
+    let dataCart = res && res.data ? res.data.data : [];
+    setProductCart(dataCart);
+    // setIsLoading(false)
+  }
+  const value = productCart.reduce((accumulator: any, item: any) => accumulator + item.productQuantity, 0)
+  // console.log(value);
 
   return (
-    <ScrollView nestedScrollEnabled={false} style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.hiUser}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Avatar
@@ -26,33 +51,37 @@ const HomeScreen = ({ navigation }: any) => {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
           <BtnGoChat />
-          <BtnGoCart />
+          <BtnGoCart value={value} />
         </View>
       </View>
-
-      {/* search */}
-      <View style={styles.elementsHeaderContainer}>
-        <Search />
-      </View>
-
-      {/* banner */}
-      <View >
-        <Slider />
-      </View>
-
-      {/* Category */}
-      <View style={styles.elementsHeaderContainer}>
-        <ListCategory />
-      </View>
-
-      <View style={styles.elementsProductContainer} >
-        {/* Feature Product */}
-        <ListProduct />
-
-      </View>
+      <ScrollView nestedScrollEnabled={false} >
 
 
-    </ScrollView>
+        {/* search */}
+        <View style={styles.elementsHeaderContainer}>
+          <Search />
+        </View>
+
+        {/* banner */}
+        <View >
+          <Slider />
+        </View>
+
+        {/* Category */}
+        <View style={styles.elementsHeaderContainer}>
+          <ListCategory />
+        </View>
+
+        <View style={styles.elementsProductContainer} >
+          {/* Feature Product */}
+          <ListProduct />
+
+        </View>
+
+
+      </ScrollView>
+    </SafeAreaView>
+
   );
 };
 
@@ -61,31 +90,24 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
-    position: 'relative'
   },
   hiUser: {
-    paddingHorizontal: 20,
-    paddingTop: 10,
-    flex: 1,
+    paddingHorizontal: 10,
+    padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlignVertical: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  header: {
 
-    position: 'relative',
-    padding: 10,
-    borderBottomColor: '#fafafa',
-    borderBottomWidth: 2
-  },
   elementsHeaderContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10
   },
   elementsProductContainer: {
     padding: 20,
-    backgroundColor: '#EDEDED'
+    backgroundColor: '#EDEDED',
+    marginBottom: 50
   }
 
 });

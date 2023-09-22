@@ -29,11 +29,11 @@ const NewsScreen = ({ navigation }: any) => {
       <View style={styles.container}>
         {
           data.map((item: any) => {
+            // console.log(item);
             return (
-
               <TouchableOpacity
                 style={[styles.card, { backgroundColor: '#fff', shadowColor: '#000' }]} key={item.id}
-                onPress={() => navigation.navigate('WebViewScreen', { url: item.url })}
+                onPress={() => navigation.navigate('WebViewScreen', { url: item.url, title: item.title })}
               >
                 <Avatar
                   size={100}

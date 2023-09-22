@@ -40,6 +40,8 @@ const ListCategory = () => {
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item: any) => item.categoryID}
                     renderItem={({ item }: any) => {
+                        // console.log(item);
+
                         return (
                             <TouchableOpacity key={item.categoryID}
                                 onPress={() => navigation.navigate('CategoryScreen', { item: item })}

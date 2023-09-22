@@ -1,12 +1,33 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-
-
+import { Button, View, StyleSheet, Text } from 'react-native';
+import BtnGoBack from '../../components/BtnGoBack';
+import { Rating, AirbnbRating } from 'react-native-ratings';
+const star = require('../../assets/star.png')
 const ChatScreen = () => {
+
     return (
-        <View style={styles.container}>
-            <Text>ChatScreen</Text>
-        </View>
+        <>
+            <View style={styles.container}>
+                <BtnGoBack />
+            </View>
+            <Text>Chat</Text>
+
+            <AirbnbRating
+                reviews={["Terrible", "Bad", "Medium", "OK", "Awesome"]}
+                defaultRating={5}
+                size={20}
+                reviewSize={20}
+                onFinishRating={(rating: any) => console.log(rating)}
+            />
+
+
+
+
+
+
+
+        </>
+
     );
 };
 

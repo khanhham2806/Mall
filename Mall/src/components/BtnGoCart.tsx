@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Badge } from 'react-native-elements';
-const BtnGoCart = () => {
+import { useState, useEffect } from 'react'
+import axios from 'axios';
+import { BASE_URL } from '../../config';
+const BtnGoCart = ({ value }: any) => {
 
 
     const navigation: any = useNavigation()
     const hanldeGoCart = () => {
-        navigation.navigate('Order');
+        navigation.navigate('Cart');
     }
-    const value = 1
     const status = 'error';
     return (
         <>
@@ -36,6 +38,3 @@ const BtnGoCart = () => {
 
 export default BtnGoCart;
 
-const styles = StyleSheet.create({
-    container: {}
-});
