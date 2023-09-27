@@ -47,13 +47,13 @@ exports.login = async (req, res, next) => {
   }
   const user = getUser && getUser[0];
 
-  const isPasswordValid = bcrypt.compareSync(password, user.Password);
+  const isPasswordValid = bcrypt.compareSync(password, user.password);
   if (!isPasswordValid) {
     return res.status(401).send("Mật khẩu không chính xác.");
   }
 
   const dataForAccessToken = {
-    username: user.Username,
+    username: user.username,
   };
   const accessTokenSecret =
     process.env.ACCESS_TOKEN_SECRET || jwtVariable.accessTokenSecret;
@@ -73,7 +73,7 @@ exports.login = async (req, res, next) => {
   let refreshToken = randToken.generate(jwtVariable.refreshTokenSize); // tạo 1 refresh token ngẫu nhiên
   if (!user.refreshToken) {
     // Nếu user này chưa có refresh token thì lưu refresh token đó vào database
-    await updateRefreshToken({ refreshToken, accountId: user.AccountID });
+    await updateRefreshToken({ refreshToken, accountId: user.accountID });
   } else {
     // Nếu user này đã có refresh token thì lấy refresh token đó từ database
     refreshToken = user.refreshToken;
@@ -120,7 +120,7 @@ exports.refreshToken = async (req, res) => {
 
   const user = getUser && getUser[0];
 
-  if (refreshTokenFromBody !== user.RefreshToken) {
+  if (refreshTokenFromBody !== user.refreshToken) {
     return res.status(400).send("Refresh token không hợp lệ.");
   }
 

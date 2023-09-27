@@ -48,7 +48,7 @@ app
   .post(function (req, res) {
     let sql = `INSERT INTO Account SET ?`;
     const { body } = req;
-    if (!body.AccountID) {
+    if (!body.accountID) {
       res
         .status(400)
         .send({ status: "error", message: "Dữ liệu đầu vào không tồn tại." });
@@ -87,7 +87,7 @@ app
               WHERE AccountID = ?`;
     const { body, params } = req;
     const { accountId } = params;
-    if (!body.AccountID) {
+    if (!body.accountID) {
       res
         .status(400)
         .send({ status: "error", message: "AccountID vào không tồn tại." });
@@ -233,31 +233,33 @@ app.get('/category/:category', (req, res) => {
 app.post('/cart', (req, res) => {
   let sql = `INSERT INTO cart set  ? `;
   const values = req.body
-  console.log(values);
-  con.query(sql, values, function (err) {
+  con.query(sql, values, function (err, response) {
     if (err) {
       res.send({ status: "error", message: err });
     } else {
-      res.send({ status: "success", data: sql });
+      res.send({ status: "success", data: { ...values, cartID: response.insertId } });
     }
   });
 })
 
-app.get('/cart', (req, res) => {
-  let sql = 'select * from cart  join product where product.productID = cart.productID';
-  con.query(sql, (err, response) => {
+app.get('/cart/:accountID', (req, res) => {
+  const { accountID } = req.params
+  let sql = 'select * from cart , product where product.productID = cart.productID having cart.accountID =?';
+  con.query(sql, accountID, (err, response) => {
     if (err) {
       res.send({ status: "error", message: err });
     } else {
+      // console.log(sql);
       res.send({ status: "success", data: response });
     }
   });
 })
 
+
 app.put('/cart/increment', (req, res) => {
-  const { productID } = req.body
-  let sql = 'update cart set productQuantity = productQuantity +1 where productID =?';
-  con.query(sql, productID, (err, response) => {
+  const { cartID } = req.body
+  let sql = 'update cart set productQuantity = productQuantity +1 where cartID =?';
+  con.query(sql, cartID, (err, response) => {
     if (err) {
       res.send({ status: "error", message: err });
     } else {
@@ -266,9 +268,9 @@ app.put('/cart/increment', (req, res) => {
   });
 })
 app.put('/cart/decrement', (req, res) => {
-  const { productID } = req.body
-  let sql = 'update cart set productQuantity = productQuantity -1 where productID =?';
-  con.query(sql, productID, (err, response) => {
+  const { cartID } = req.body
+  let sql = 'update cart set productQuantity = productQuantity -1 where cartID =?';
+  con.query(sql, cartID, (err, response) => {
     if (err) {
       res.send({ status: "error", message: err });
     } else {
@@ -278,7 +280,6 @@ app.put('/cart/decrement', (req, res) => {
 })
 app.delete('/cart/:cartID', function (req, res) {
   const { cartID } = req.params;
-  console.log(cartID);
   let sql = `DELETE FROM Cart WHERE cartID = ? `;
   con.query(sql, cartID, function (err) {
     if (err) {
@@ -289,9 +290,10 @@ app.delete('/cart/:cartID', function (req, res) {
   });
 });
 
-app.delete('/checkout', function (req, res) {
-  let sql = `DELETE FROM Cart WHERE accountID =1;`;
-  con.query(sql, function (err) {
+app.delete('/checkout/:accountID', function (req, res) {
+  const { accountID } = req.params;
+  let sql = `DELETE FROM Cart WHERE accountID =?;`;
+  con.query(sql, accountID, function (err) {
     if (err) {
       res.send({ status: "error", message: err });
     } else {
@@ -299,7 +301,6 @@ app.delete('/checkout', function (req, res) {
     }
   });
 });
-
 
 
 app.listen(port);

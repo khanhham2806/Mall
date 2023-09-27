@@ -20,10 +20,10 @@ exports.registerAccount = async ({ username, password, fullname, email }) => {
   return new Promise((resolve, reject) => {
     const hashPassword = bcrypt.hashSync(password, SALT_ROUNDS);
     const newUser = {
-      Username: username,
-      Password: hashPassword,
-      Email: email,
-      FullName: fullname,
+      username: username,
+      password: hashPassword,
+      email: email,
+      fullName: fullname,
     };
     let createUser = `INSERT INTO Account SET ?`;
     connect.query(createUser, newUser, function (err, data) {
@@ -40,7 +40,7 @@ exports.updateRefreshToken = async ({ refreshToken, accountId }) => {
   return new Promise((resolve, reject) => {
     const sql = "UPDATE Account SET ? WHERE AccountID = ?";
     const newUser = {
-      RefreshToken: refreshToken,
+      refreshToken: refreshToken,
     };
     connect.query(sql, [newUser, accountId], function (err, data) {
       if (err) {
@@ -52,4 +52,4 @@ exports.updateRefreshToken = async ({ refreshToken, accountId }) => {
   });
 };
 
-exports.deleteAccount = async () => {};
+exports.deleteAccount = async () => { };
