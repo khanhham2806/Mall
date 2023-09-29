@@ -2,15 +2,16 @@ import * as React from 'react';
 import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Modal, Alert } from 'react-native';
 import { useEffect } from 'react'
 import { Avatar } from 'react-native-elements';
-import { ListItem, Button } from '@rneui/themed';
+import { ListItem, Button, CheckBox } from '@rneui/themed';
 import Toast from 'react-native-toast-message';
 
-import BtnGoBack from '../../components/BtnGoBack';
-import CustomButton from '../../components/CustomButton';
-import BtnGoChat from '../../components/BtnGoChat';
-import VND from '../../components/VND';
+import BtnGoBack from '../../components/button/BtnGoBack';
+import CustomButton from '../../components/button/CustomButton';
+import BtnGoChat from '../../components/button/BtnGoChat';
+import VND from '../../function/VND';
 
-import { useContext } from 'react';
+
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext'
 import { getListCart, incrementQuantity, decrementQuantity, removeFromCart } from '../../redux/actions/action';
 import { useSelector } from 'react-redux'
@@ -19,7 +20,17 @@ import store from '../../redux/store';
 const OrderScreen = ({ navigation }: any) => {
   const { userInfo } = useContext(AuthContext);
 
-
+  const [checked, setChecked] = useState<any>([]);
+  // const handleCheck = (cartID: number) => {
+  //   setChecked((prev: any) => {
+  //     const isChecked = checked.includes(cartID)
+  //     if (isChecked) {
+  //       return checked.filter((item: any) => item !== cartID)
+  //     } else {
+  //       return [...prev, cartID]
+  //     }
+  //   })
+  // }
   const fetchData = async () => {
     store.dispatch(getListCart(userInfo.user.accountID));
   };
@@ -27,6 +38,8 @@ const OrderScreen = ({ navigation }: any) => {
     fetchData();
   }, []);
   const product: any = useSelector<any>(state => state.CartReducer.carts);
+  // const isCheckedProduct = product.filter((item: any) => checked.includes(item.cartID))
+  // console.log(isCheckedProduct);
 
   const total = product.reduce((accumulator: any, item: any) => accumulator + item.productActualPrice * item.productQuantity, 0)
 
@@ -85,27 +98,42 @@ const OrderScreen = ({ navigation }: any) => {
           product.map((item: any, index: number) => {
             const arrLinkImage = item.productImageUrlEnd.split(',')
             // console.log(arrLinkImage);
-            return (
-              <ListItem.Swipeable key={index}
+            return (<View key={index} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+
+              <CheckBox
+                containerStyle={{ padding: 0, width: '5%' }}
+                checked={checked}
+                // checked={checked.includes(item.cartID)}
+                // onPress={() => handleCheck(item.cartID)}
+                iconType="material-community"
+                checkedIcon="checkbox-outline"
+                uncheckedIcon={'checkbox-blank-outline'}
+              />
+
+              <ListItem.Swipeable
+                containerStyle={{ width: '95%' }}
                 bottomDivider
                 leftWidth={0}
-                rightWidth={70}
+                rightWidth={90}
                 rightContent={
                   <Button
                     onPress={() => handleRemoveFromCart(item.cartID)}
                     icon={{ name: 'delete', color: 'white' }}
                     buttonStyle={{ minHeight: '100%', backgroundColor: '#FE3A30' }}
+                    iconContainerStyle={{ paddingRight: 10 }}
                     titleStyle={{ fontSize: 14 }}
                   />
                 }>
+
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <View style={{ flex: 2 }}>
                     <Avatar size={60} source={{ uri: item.productImageUrlStart.concat(arrLinkImage[0]) }}
                     />
                   </View>
-                  <View style={{ flex: 6, flexDirection: 'column', maxWidth: 200 }}>
+                  <View style={{ flex: 6, flexDirection: 'column', maxWidth: 180 }}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.productTitle}</Text>
                     <Text>{VND.format(item.productActualPrice)}</Text>
+
                   </View>
                   <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center' }}>
                     <TouchableOpacity onPress={() => handleDecrement(item.cartID, item)}>
@@ -127,23 +155,26 @@ const OrderScreen = ({ navigation }: any) => {
                 </View>
               </ListItem.Swipeable>
 
+            </View>
             )
           })
+
         }
+
       </ScrollView >
 
 
       <Toast></Toast>
 
-      {(product.length)
-        ?
+      {
+        (product.length > 0)
+        &&
         <View style={{ flexDirection: 'row', margin: 10, justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Total: {VND.format(total)}</Text>
           <CustomButton
             onPress={() => { handleCheckout() }}
             text='Checkout' width='30%' bgColor='#3669C9' txtColor='#fff' />
         </View>
-        : <></>
       }
     </View >
 

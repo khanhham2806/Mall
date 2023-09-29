@@ -10,7 +10,7 @@ const bcrypt = require("bcrypt");
 
 exports.register = async (req, res) => {
   const username = req.body.username.toLowerCase();
-  const password = req.body.password.toLowerCase();
+  const password = req.bodyp.toLowerCase();
   const fullname = req.body.fullname;
   const email = req.body.email;
   const user = await getAccounts({ username });

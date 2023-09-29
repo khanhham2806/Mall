@@ -21,7 +21,7 @@ const BtnShare = ({ margin, url, title }: any) => {
         <Pressable
             onPress={onShare}
             style={[{
-                padding: 10, width: 40, backgroundColor: '#ccc', borderRadius: 30,
+                padding: 10, width: 40, backgroundColor: '#ededed', borderRadius: 30,
             }, margin ? { margin: margin } : {},]}>
             <Ionicons name='share-social' size={20} />
         </Pressable>

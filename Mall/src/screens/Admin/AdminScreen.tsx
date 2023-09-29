@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import BtnGoBack from '../../components/BtnGoBack';
-import CustomButton from '../../components/CustomButton';
+import BtnGoBack from '../../components/button/BtnGoBack';
+import CustomButton from '../../components/button/CustomButton';
 
 
 

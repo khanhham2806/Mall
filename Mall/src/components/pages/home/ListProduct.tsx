@@ -5,9 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import axios from 'axios';
 
-import ComponentProduct from '../../components/ComponentProduct';
-import { BASE_URL } from '../../../config';
-import VND from '../../components/VND';
+import ComponentProduct from './ComponentProduct';
+import { BASE_URL } from '../../../../config';
+import VND from '../../../function/VND';
 
 
 const width = Dimensions.get('screen').width * 0.43;
@@ -17,29 +17,6 @@ const ListProduct = () => {
     const navigation: any = useNavigation();
     const [data, setData] = useState([]);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 6;
-    const lastIndex = currentPage * recordsPerPage;
-    const firstIndex = lastIndex - recordsPerPage;
-    const records = data.slice(firstIndex, lastIndex);
-    const npage = Math.ceil(data.length / recordsPerPage)
-    const number = [...Array(npage + 1).keys()].slice(1)
-    // console.log(number);
-    const handlePrevPage = () => {
-        if (currentPage !== 1) {
-            setCurrentPage(currentPage - 1)
-        }
-    }
-    const handleNextPage = () => {
-        if (currentPage != npage) {
-            setCurrentPage(currentPage + 1)
-        }
-    }
-    const handleChangePage = (id: any) => {
-        setCurrentPage(id)
-
-    }
-    // console.log(records);
 
     useEffect(() => {
         getData()
@@ -51,17 +28,13 @@ const ListProduct = () => {
         let dataProducts = res && res.data ? res.data.data : [];
         setData(dataProducts);
     }
-
-
     return (
         <View>
             <Text style={styles.viewContent}>Products</Text>
             <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', rowGap: 20 }]}>
-                {records.map((item: any, index: any) => {
+                {data.map((item: any, index: any) => {
                     // console.log(item);
-
                     const arrLinkImage = item.productImageUrlEnd.split(',')
-
                     return (
                         <ComponentProduct
                             key={index}
@@ -74,21 +47,6 @@ const ListProduct = () => {
                         />
                     )
                 })}
-            </View>
-            <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <Pressable style={{ margin: 5, padding: 5, borderWidth: 1, width: 30, height: 30 }} onPress={handlePrevPage} >
-                    <Ionicons name='chevron-back-outline' size={15} />
-                </Pressable>
-                {number.map((n, i) => {
-                    return (
-                        <Pressable onPress={() => handleChangePage(n)} key={i} style={{ margin: 5, alignItems: 'center', paddingTop: 3, width: 30, height: 30, borderWidth: 1 }}>
-                            <Text>{n}</Text>
-                        </Pressable>
-                    )
-                })}
-                <Pressable style={{ margin: 5, padding: 5, borderWidth: 1, width: 30, height: 30 }} onPress={handleNextPage}>
-                    <Ionicons name='chevron-forward-outline' size={15} />
-                </Pressable>
             </View>
 
         </View >

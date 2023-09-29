@@ -6,7 +6,7 @@ import { Avatar } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 
-import { BASE_URL } from '../../../config';
+import { BASE_URL } from '../../../../config';
 
 const Search = () => {
   const navigation: any = useNavigation();
@@ -38,34 +38,32 @@ const Search = () => {
   })
 
   return (
-    <View style={{ position: 'relative' }}>
+    <View style={{ position: 'relative', width: '85%' }}>
       <View style={styles.input}>
         <TextInput onChangeText={handleOnChangeSearch} value={searchQuery} placeholder='Search' style={styles.textInput} />
-        {(searchQuery !== '') ?
-          < TouchableOpacity onPress={handleOnPressSearch} style={{ flex: 1 }}>
+        {(searchQuery !== '') &&
+          < TouchableOpacity onPress={handleOnPressSearch} >
             <FontAwesome name='search' style={styles.btnInput} size={20} />
-          </TouchableOpacity> : <></>
+          </TouchableOpacity>
         }
       </View>
       {
         (searchQuery !== '')
-          ?
-          <ScrollView nestedScrollEnabled={true} style={{ position: 'absolute', top: 50, zIndex: 100, width: '100%', maxHeight: 180, backgroundColor: '#ededed', borderRadius: 10, marginTop: 5 }}>
-            {results.map((item: any) => {
-              const arrLinkImage = item.productImageUrlEnd.split(',')
+        &&
+        <ScrollView nestedScrollEnabled={true} style={{ position: 'absolute', top: 50, zIndex: 100, width: '100%', maxHeight: 180, backgroundColor: '#ededed', borderRadius: 10, marginTop: 5 }}>
+          {results.map((item: any) => {
+            const arrLinkImage = item.productImageUrlEnd.split(',')
 
-              return (
-                <View style={{ marginHorizontal: 10, marginVertical: 5 }} key={item.productID}>
-                  <TouchableOpacity onPress={() => navigation.navigate('ProductInfo', { item: item })} style={{ borderRadius: 10, backgroundColor: '#fff', padding: 5, flexDirection: 'row', alignItems: 'center' }}>
-                    <Avatar source={{ uri: item.productImageUrlStart.concat(arrLinkImage[0]) }} />
-                    <Text style={{ marginLeft: 10 }}>{item.productTitle}</Text>
-                  </TouchableOpacity>
-                </View>
-              )
-            })}
-          </ScrollView>
-          :
-          <></>
+            return (
+              <View style={{ marginHorizontal: 10, marginVertical: 5 }} key={item.productID}>
+                <TouchableOpacity onPress={() => navigation.navigate('ProductInfo', { item: item })} style={{ borderRadius: 10, backgroundColor: '#fff', padding: 5, flexDirection: 'row', alignItems: 'center' }}>
+                  <Avatar source={{ uri: item.productImageUrlStart.concat(arrLinkImage[0]) }} />
+                  <Text style={{ marginLeft: 10 }}>{item.productTitle}</Text>
+                </TouchableOpacity>
+              </View>
+            )
+          })}
+        </ScrollView>
       }
 
     </View >
@@ -76,13 +74,14 @@ export default Search;
 
 const styles = StyleSheet.create({
   input: {
+    alignItems: 'center',
     backgroundColor: '#ededed',
     display: 'flex',
     flexDirection: 'row',
-    borderRadius: 10
+    justifyContent: 'space-between',
+    borderRadius: 10,
   },
   textInput: {
-    width: '80%',
     marginHorizontal: 10
   },
   btnInput: {

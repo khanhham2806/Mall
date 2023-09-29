@@ -4,8 +4,8 @@ import { Avatar } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
-import BtnGoBack from '../../components/BtnGoBack';
-import BtnGoChat from '../../components/BtnGoChat';
+import BtnGoBack from '../../button/BtnGoBack';
+import BtnGoChat from '../../button/BtnGoChat';
 const AllCommentScreen = ({ route }: any) => {
     const { dataComment } = route.params;
     // console.log(dataComment);

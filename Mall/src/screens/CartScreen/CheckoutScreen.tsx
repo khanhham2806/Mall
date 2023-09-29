@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { Text, View, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { Avatar } from 'react-native-elements';
+import { Avatar, ListItem } from 'react-native-elements';
 import { useEffect, useState } from 'react'
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,36 +9,28 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { BASE_URL } from '../../../config';
-import BtnGoBack from '../../components/BtnGoBack';
-import BtnGoChat from '../../components/BtnGoChat';
-import VND from '../../components/VND';
-import Line from '../../components/Line';
-import CustomButton from '../../components/CustomButton';
-
+import BtnGoBack from '../../components/button/BtnGoBack';
+import BtnGoChat from '../../components/button/BtnGoChat';
+import VND from '../../function/VND';
+import Line from '../../components/pages/Line';
+import CustomButton from '../../components/button/CustomButton';
+import { removeFromCart } from '../../redux/actions/action';
 import { AuthContext } from '../../context/AuthContext';
 import { useContext } from 'react';
 
 
 const CheckoutScreen = ({ route }: any) => {
-    const { userInfo } = useContext(AuthContext)
 
     const { product } = route.params;
+    console.log(product);
+
     const navigation: any = useNavigation();
     const isFocused = useIsFocused();
     const [address, setAddress] = useState<any>({})
 
     const total = product.reduce((accumulator: any, item: any) => accumulator + item.productActualPrice * item.productQuantity, 0)
-    const removeToCart = () => {
-        axios.delete(`${BASE_URL}/checkout/${userInfo.user.accountID}`)
-            .then(response => {
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
 
     const handleBuy = () => {
-        removeToCart()
         navigation.navigate('Home')
     }
     useEffect(() => {
@@ -70,8 +62,8 @@ const CheckoutScreen = ({ route }: any) => {
             <Pressable onPress={() => navigation.navigate('CheckoutAddress')} style={{ margin: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
                 <View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Ionicons name='location-outline' size={20} />
-                        <Text style={{ marginHorizontal: 5, fontSize: 16, marginBottom: 5 }}>Delivery Address</Text>
+                        <Ionicons color='#000' name='location-outline' size={20} />
+                        <Text style={{ color: '#000', marginHorizontal: 5, fontSize: 16, marginBottom: 5 }}>Delivery Address</Text>
                     </View>
                     <View style={{ marginLeft: 20 }}>
                         <Text style={{ fontSize: 15 }}>{address.name} | {address.phone}</Text>
@@ -91,24 +83,17 @@ const CheckoutScreen = ({ route }: any) => {
                         const arrLinkImage = item.productImageUrlEnd.split(',')
 
                         return (
-                            <View key={index}>
-                                <View style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }}>
-
-                                    <View style={{ flex: 2 }}>
-                                        <Avatar size={60} source={{ uri: item.productImageUrlStart.concat(arrLinkImage[0]) }}
-                                        />
-                                    </View>
-                                    <View style={{ flex: 6, flexDirection: 'column' }}>
-                                        <Text >{item.productTitle}</Text>
-                                        <Text>{VND.format(item.productActualPrice * item.productQuantity)}</Text>
-                                    </View>
-                                    <View>
-                                        <Text>X{item.productQuantity}</Text>
-                                    </View>
-                                </View>
-                                <Line />
-                            </View>
-
+                            <ListItem key={index} bottomDivider>
+                                <Avatar
+                                    size={60}
+                                    source={{ uri: item.productImageUrlStart.concat(arrLinkImage[0]) }}
+                                />
+                                <ListItem.Content>
+                                    <ListItem.Title>{item.productTitle}</ListItem.Title>
+                                    <ListItem.Subtitle>{VND.format(item.productActualPrice * item.productQuantity)}</ListItem.Subtitle>
+                                </ListItem.Content>
+                                <ListItem.Subtitle>X{item.productQuantity}</ListItem.Subtitle>
+                            </ListItem>
                         )
                     })
                 }

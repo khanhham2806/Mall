@@ -7,18 +7,19 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-toast-message'
 import axios from 'axios';
 
-import CustomButton from '../../components/CustomButton';
-import BtnGoBack from '../../components/BtnGoBack';
-import BtnGoCart from '../../components/BtnGoCart';
-import Line from '../../components/Line';
-import { BASE_URL } from '../../../config';
-import VND from '../../components/VND';
+import CustomButton from '../components/button/CustomButton';
+import BtnGoBack from '../components/button/BtnGoBack';
+import BtnGoCart from '../components/button/BtnGoCart';
+import Line from '../components/pages/Line';
+import { BASE_URL } from '../../config';
+import VND from '../function/VND';
+
 
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext'
-import { addToCart, getListCart } from '../../redux/actions/action';
+import { AuthContext } from '../context/AuthContext'
+import { addToCart, getListCart } from '../redux/actions/action';
 import { useSelector, useDispatch } from 'react-redux'
-import store from '../../redux/store';
+import store from '../redux/store';
 
 const width = Dimensions.get('screen').width;
 
@@ -28,11 +29,7 @@ const ProductInfoScreen = ({ route }: any) => {
     const { item } = route.params;
 
     const productCart: any = useSelector<any>(state => state.CartReducer.carts);
-    // console.log(productCart);
 
-    // const valueCart = productCart.reduce((accumulator: number, item: any) => accumulator + Number(item.productQuantity), 0)
-
-    const [isLoading, setIsLoading] = useState(false)
     const [dataComment, setDataComment] = useState<any>([]);
     useEffect(() => {
         fetchData()
@@ -195,13 +192,7 @@ const ProductInfoScreen = ({ route }: any) => {
                         )
                     })}
                     {(dataComment.length > 3)
-                        ?
-                        // < CustomButton
-                        //     text={`See All Reviews (${dataComment.length})`}
-                        //     onPress={() => navigation.navigate('AllComments', { dataComment: dataComment })}
-                        //     bgColor='#dfeaed' txtColor='#000'
-
-                        // />
+                        &&
                         <Chip
                             onPress={() => navigation.navigate('AllComments', { dataComment: dataComment })}
                             title={`See All Reviews (${dataComment.length})`}
@@ -210,7 +201,6 @@ const ProductInfoScreen = ({ route }: any) => {
                             buttonStyle={{ borderColor: 'black' }}
                             titleStyle={{ color: '#000' }}
                         />
-                        : <></>
                     }
                 </View>
 

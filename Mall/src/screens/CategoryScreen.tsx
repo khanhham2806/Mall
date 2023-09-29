@@ -4,11 +4,11 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import BtnGoBack from '../../components/BtnGoBack';
-import BtnGoCart from '../../components/BtnGoCart';
-import { BASE_URL } from '../../../config';
-import VND from '../../components/VND';
-import ComponentProduct from '../../components/ComponentProduct';
+import BtnGoBack from '../components/button/BtnGoBack';
+import BtnGoCart from '../components/button/BtnGoCart';
+import { BASE_URL } from '../../config';
+import VND from '../function/VND';
+import ComponentProduct from '../components/pages/home/ComponentProduct';
 
 const width = Dimensions.get('screen').width * 0.43;
 const height = Dimensions.get('screen').height * 0.35;
@@ -33,22 +33,6 @@ const CategoryScreen = ({ route }: any) => {
         }
         getData()
     }, []);
-
-    // useEffect(() => {
-    //     setIsLoading(true)
-    //     if (isFocused) {
-    //         getDataCart()
-    //     }
-    // }, [isLoading, isFocused])
-    // const getDataCart = async () => {
-    //     const res = await axios.get(`${BASE_URL}/cart`)
-    //     // console.log(res.data.data);
-    //     let dataCart = res && res.data ? res.data.data : [];
-    //     setProductCart(dataCart);
-    //     // setIsLoading(false)
-    // }
-    // const value = productCart.reduce((accumulator: any, item: any) => accumulator + item.productQuantity, 0)
-    // // console.log(value);
     return (
         <>
             <View style={{ padding: 10, flexDirection: "row", alignItems: 'center', justifyContent: 'space-between' }}>
@@ -57,7 +41,6 @@ const CategoryScreen = ({ route }: any) => {
                     Category: {item.categoryTitle}
                 </Text>
                 <BtnGoCart />
-                {/* <BtnGoCart value={value} /> */}
             </View>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', rowGap: 20 }]}>

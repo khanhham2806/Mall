@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TabNav from './TabNav';
-import WebViewScreen from '../screens/NewsScreen/WebViewScreen';
-import CategoryScreen from '../screens/HomeScreen/CategoryScreen';
-import SearchProductScreen from '../screens/HomeScreen/SearchProductScreen';
-import ChatScreen from '../screens/ChatScreen/ChatScreen';
-import AdminScreen from '../screens/Admin/AdminScreen';
-import Product from '../screens/Admin/Product';
-import ProductInfo from '../screens/Admin/ProductInfo';
-import AllCommentsScreen from '../screens/HomeScreen/AllCommentsScreen';
-import CheckoutScreen from '../screens/CartScreen/CheckoutScreen';
-import CheckoutAddressScreen from '../screens/CartScreen/CheckoutAddressScreen';
-import SettingsScreen from '../screens/UserScreen/SettingsScreen';
-import UserInfoScreen from '../screens/UserScreen/InfoScreen';
-import OrderScreen from '../screens/CartScreen/CartScreen';
-import ProductInfoScreen from '../screens/HomeScreen/ProductInfoScreen';
+import TabNav from '../navigation/TabNav';
+import WebViewScreen from '../../screens/NewsScreen/WebViewScreen';
+import CategoryScreen from '../../screens/CategoryScreen';
+import SearchProductScreen from '../../screens/SearchProductScreen';
+import ChatScreen from '../../screens/ChatScreen';
+import AdminScreen from '../../screens/Admin/AdminScreen';
+import Product from '../../screens/Admin/Product';
+import ProductInfo from '../../screens/Admin/ProductInfo';
+import AllCommentsScreen from '../../components/pages/product/AllCommentsScreen';
+import CheckoutScreen from '../../screens/CartScreen/CheckoutScreen';
+import CheckoutAddressScreen from '../../screens/CartScreen/CheckoutAddressScreen';
+import SettingsScreen from '../../screens/UserScreen/SettingsScreen';
+import UserInfoScreen from '../../screens/UserScreen/InfoScreen';
+import OrderScreen from '../../screens/CartScreen/CartScreen';
+import ProductInfoScreen from '../../screens/ProductInfoScreen';
 const Stack = createNativeStackNavigator();
 const AppStack = () => {
     return (<>

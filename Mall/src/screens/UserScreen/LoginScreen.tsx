@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '../../components/button/CustomButton';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'

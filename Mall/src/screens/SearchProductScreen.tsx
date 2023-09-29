@@ -5,11 +5,12 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
 import axios from 'axios';
 
-import BtnGoBack from '../../components/BtnGoBack';
-import BtnGoCart from '../../components/BtnGoCart';
-import ComponentProduct from '../../components/ComponentProduct';
-import { BASE_URL } from '../../../config';
-import VND from '../../components/VND';
+import BtnGoBack from '../components/button/BtnGoBack';
+import BtnGoCart from '../components/button/BtnGoCart';
+import ComponentProduct from '../components/pages/home/ComponentProduct';
+import { BASE_URL } from '../../config';
+import VND from '../function/VND';
+
 
 const width = Dimensions.get('screen').width * 0.43;
 const height = Dimensions.get('screen').height * 0.35;
@@ -82,7 +83,7 @@ const SearchProductScreen = ({ route }: any) => {
           <BtnGoCart value={value} />
         </View>
         <View style={{ alignItems: 'center', marginTop: 200 }}>
-          <Avatar size={100} source={require('../../assets/images/noResult.png')} />
+          <Avatar size={100} source={require('../assets/images/noResult.png')} />
           <Text>No result for "{searchQuery}"</Text>
         </View>
       </>

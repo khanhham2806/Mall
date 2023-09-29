@@ -5,11 +5,11 @@ import { Avatar } from '@rneui/themed';
 import axios from 'axios';
 import { BASE_URL } from '../../../config';
 import { useNavigation } from '@react-navigation/native';
-import VND from '../../components/VND';
+import VND from '../../function/VND';
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import BtnGoBack from '../../components/BtnGoBack';
+import BtnGoBack from '../../components/button/BtnGoBack';
 import { DataTable } from 'react-native-paper';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '../../components/button/CustomButton';
 const Product = () => {
     const navigation: any = useNavigation();
     const [data, setData] = useState([]);

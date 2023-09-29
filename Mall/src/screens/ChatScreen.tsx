@@ -3,7 +3,7 @@ import { Button, View, StyleSheet, Text } from 'react-native';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 
 
-import BtnGoBack from '../../components/BtnGoBack';
+import BtnGoBack from '../components/button/BtnGoBack';
 const star = require('../../assets/star.png')
 const ChatScreen = () => {
 

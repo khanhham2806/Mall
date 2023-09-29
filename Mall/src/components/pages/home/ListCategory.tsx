@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { BASE_URL } from '../../../config';
+import { BASE_URL } from '../../../../config';
 
 const ListCategory = () => {
     const navigation: any = useNavigation();

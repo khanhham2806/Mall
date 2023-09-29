@@ -1,7 +1,7 @@
 import React from "react";
 import { WebView } from "react-native-webview";
-import BtnGoBack from "../../components/BtnGoBack";
-import BtnShare from "../../components/BtnShare";
+import BtnGoBack from "../../components/button/BtnGoBack";
+import BtnShare from "../../components/button/BtnShare";
 import { View } from 'react-native'
 import { Text } from "react-native-elements";
 

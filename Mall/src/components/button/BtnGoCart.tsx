@@ -5,11 +5,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native';
 import { Badge } from 'react-native-elements';
 
-import { addToCart, getListCart } from '../redux/actions/action';
-import { AuthContext } from '../context/AuthContext'
+import { getListCart } from '../../redux/actions/action';
+import { AuthContext } from '../../context/AuthContext'
 import { useContext } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import store from '../redux/store';
+import store from '../../redux/store';
 const BtnGoCart = ({ value }: any) => {
 
     const { userInfo } = useContext(AuthContext);

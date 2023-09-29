@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import BtnGoBack from '../../components/BtnGoBack';
-import BtnGoCart from '../../components/BtnGoCart';
+import BtnGoBack from '../../components/button/BtnGoBack';
+import BtnGoCart from '../../components/button/BtnGoCart';
 import { ListItem, Icon } from 'react-native-elements';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';

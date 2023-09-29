@@ -1,10 +1,6 @@
 import * as React from 'react';
-import { useState, useEffect, } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Avatar } from '@rneui/themed';
-import axios from 'axios';
-import { BASE_URL } from '../../config';
-import { useNavigation } from '@react-navigation/native';
 const width = Dimensions.get('screen').width * 0.43;
 const height = Dimensions.get('screen').height * 0.35;
 

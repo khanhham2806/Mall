@@ -15,11 +15,11 @@ interface ICart {
 }
 
 const CartReducer = (
-    state: { carts: ICart[], allItem: number } = {
+    state: { carts: ICart[], check: any[] } = {
         carts: [],
-        allItem: 0
+        check: []
     },
-    action: { carts: ICart[]; cart: ICart, id: number, type: string },
+    action: { carts: ICart[]; cart: ICart, id: number, type: string, },
 ) => {
     switch (action.type) {
         case 'GET_CART_SUCCESS': {
@@ -39,7 +39,12 @@ const CartReducer = (
                 carts: newListCarts,
             };
         }
-
+        case 'TOGGLE_CHECKBOX': {
+            console.log('ok');
+            return {
+                ...state
+            }
+        }
         case 'INCREMENT_QUANTITY': {
             let listCarts = state.carts;
             let newListCarts;

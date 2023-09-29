@@ -1,20 +1,19 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity, StatusBar, Image, FlatList, SafeAreaView } from 'react-native';
-import Search from './Search';
-import Slider from '../../components/Slider';
-import ListCategory from './ListCategory';
-import ListProduct from './ListProduct';
-import BtnGoCart from '../../components/BtnGoCart';
+import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import Search from '../components/pages/home/Search';
+import Slider from '../components/pages/home/Slider';
+import BtnGoCart from '../components/button/BtnGoCart';
+import ListCategory from '../components/pages/home/ListCategory';
+import ListProduct from '../components/pages/home/ListProduct';
 const HomeScreen = ({ navigation }: any) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView nestedScrollEnabled={false} >
         {/* search */}
         <View style={styles.elementsHeaderContainer}>
           <Search />
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
             <BtnGoCart />
-            {/* <BtnGoCart value={value} /> */}
           </View>
         </View>
 
@@ -28,15 +27,12 @@ const HomeScreen = ({ navigation }: any) => {
           <ListCategory />
         </View>
 
+        {/* Feature Product */}
         <View style={styles.elementsProductContainer} >
-          {/* Feature Product */}
           <ListProduct />
-
         </View>
-
-
       </ScrollView>
-    </SafeAreaView>
+    </View>
 
   );
 };
@@ -65,7 +61,6 @@ const styles = StyleSheet.create({
   elementsProductContainer: {
     padding: 20,
     backgroundColor: '#EDEDED',
-    marginBottom: 50
   }
 
 });

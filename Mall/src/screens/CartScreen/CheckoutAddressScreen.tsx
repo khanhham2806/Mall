@@ -9,9 +9,9 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import BtnGoBack from '../../components/BtnGoBack';
-import BtnGoChat from '../../components/BtnGoChat';
-import CustomButton from '../../components/CustomButton';
+import BtnGoBack from '../../components/button/BtnGoBack';
+import BtnGoChat from '../../components/button/BtnGoChat';
+import CustomButton from '../../components/button/CustomButton';
 
 const CheckoutAddressScreen = () => {
   const navigation: any = useNavigation();
@@ -53,7 +53,7 @@ const CheckoutAddressScreen = () => {
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
-      .min(2, 'Too Short!')
+      .min(3, 'Too Short!')
       .max(50, 'Too Long!')
       .required('Please enter your name!'),
     phone: Yup.string()
@@ -88,6 +88,7 @@ const CheckoutAddressScreen = () => {
             district: '',
             addressDetail: ''
           }}
+          validationSchema={SignupSchema}
           onSubmit={async values => {
             console.log(values);
             try {
@@ -97,19 +98,30 @@ const CheckoutAddressScreen = () => {
               // saving error
             }
           }}
-          validationSchema={SignupSchema}
         >
-          {({ handleChange, errors, handleSubmit, values }) => {
+          {({ handleChange, handleBlur, errors, handleSubmit, values, touched }) => {
             return (
               <>
                 <View>
                   <Text style={{ fontWeight: 'bold' }}>Contact</Text>
-                  <TextInput placeholderTextColor={'gray'} style={styles.dropdown} placeholder='Full Name' onChangeText={handleChange('name')} value={values.name} />
-                  {errors.name && (
+                  <TextInput
+                    placeholderTextColor={'gray'}
+                    style={styles.dropdown}
+                    placeholder='Full Name'
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name} />
+                  {(errors.name && touched.name) && (
                     <Text style={styles.validate}>{errors.name}</Text>
                   )}
-                  <TextInput placeholderTextColor={'gray'} style={styles.dropdown} keyboardType='number-pad' placeholder='Phone Number' onChangeText={handleChange('phone')} value={values.phone} />
-                  {errors.phone && (
+                  <TextInput placeholderTextColor={'gray'}
+                    style={styles.dropdown}
+                    keyboardType='number-pad'
+                    placeholder='Phone Number'
+                    onBlur={handleBlur('phone')}
+                    onChangeText={handleChange('phone')}
+                    value={values.phone} />
+                  {(errors.phone && touched.phone) && (
                     <Text style={styles.validate}>{errors.phone}</Text>
                   )}
                 </View>
@@ -132,7 +144,7 @@ const CheckoutAddressScreen = () => {
                       handleDistricts(item.value)
                     }}
                   />
-                  {errors.province && (
+                  {(errors.province && touched.province) && (
                     <Text style={styles.validate}>{errors.province}</Text>
                   )}
                   <Dropdown style={styles.dropdown}
@@ -151,11 +163,11 @@ const CheckoutAddressScreen = () => {
                       handleChange('district')(item.label)
                     }}
                   />
-                  {errors.district && (
+                  {(errors.district && touched.district) && (
                     <Text style={styles.validate}>{errors.district}</Text>
                   )}
                   <TextInput placeholderTextColor={'gray'} style={styles.dropdown} placeholder='Street Name, Building, House No.' onChangeText={handleChange('addressDetail')} value={values.addressDetail} />
-                  {errors.addressDetail && (
+                  {(errors.addressDetail && touched.addressDetail) && (
                     <Text style={styles.validate}>{errors.addressDetail}</Text>
                   )}
 

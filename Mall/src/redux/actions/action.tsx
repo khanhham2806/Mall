@@ -34,12 +34,18 @@ const addToCart = (accountID: number, productID: number, item: any) => async (di
     }
     const response = await axios.post(`${BASE_URL}/cart`, body)
     if (response.status) {
-        // console.log('>>>>', response.data.data);
+        // console.log('>>>>', response.data.data)
         dispatch({
             type: 'ADD_TO_CART',
             cart: response.data.data
         });
     }
+}
+
+const toggleCheckbox = () => async (dispatch: AppDispatch) => {
+    dispatch({
+        type: 'TOGGLE_CHECKBOX',
+    });
 }
 const incrementQuantity = (cartID: number, item: any) => async (dispatch: AppDispatch) => {
     // console.log(item);
@@ -92,4 +98,4 @@ const removeFromCart = (cartID: number) => async (dispatch: AppDispatch) => {
     }
 }
 
-export { getListCart, addToCart, incrementQuantity, decrementQuantity, removeFromCart };
+export { getListCart, addToCart, toggleCheckbox, incrementQuantity, decrementQuantity, removeFromCart };

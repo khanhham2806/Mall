@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { Avatar, ListItem, Icon } from 'react-native-elements';
-import BtnGoBack from '../../components/BtnGoBack';
-import BtnGoChat from '../../components/BtnGoChat';
+import BtnGoBack from '../../components/button/BtnGoBack';
+import BtnGoChat from '../../components/button/BtnGoChat';
 import AvatarImage from 'react-native-paper/lib/typescript/components/Avatar/AvatarImage';
 
 
 
 const UserInfoScreen = ({ route }: any) => {
     const { userInfo } = route.params
-    console.log(userInfo);
-
+    // console.log(userInfo);
     return (
         <View style={{ backgroundColor: '#fff' }}>
             <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-between', margin: 10 }}>
@@ -42,7 +41,9 @@ const UserInfoScreen = ({ route }: any) => {
             </View>
 
             <View style={{ marginTop: 10 }}>
-                <ListItem topDivider containerStyle={{ backgroundColor: '#fff' }} >
+                <ListItem onPress={() => {
+                    console.log(userInfo.fullName);
+                }} topDivider containerStyle={{ backgroundColor: '#fff' }} >
                     <ListItem.Content>
                         <ListItem.Title>Name</ListItem.Title>
                     </ListItem.Content>

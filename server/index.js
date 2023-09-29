@@ -9,7 +9,6 @@ const { db } = require("./db");
 const router = require("./auth/auth.routes");
 const dotenv = require("dotenv");
 const authMiddleware = require("./auth/auth.middlewares");
-const { log } = require("console");
 app.use(express.json());
 const port = process.env.PORT || 8080;
 
@@ -48,7 +47,7 @@ app
   .post(function (req, res) {
     let sql = `INSERT INTO Account SET ?`;
     const { body } = req;
-    if (!body.accountID) {
+    if (!body.AccountID) {
       res
         .status(400)
         .send({ status: "error", message: "Dữ liệu đầu vào không tồn tại." });
@@ -82,12 +81,10 @@ app
     });
   })
   .put(function (req, res) {
-    let sql = `UPDATE Account 
-              SET ?
-              WHERE AccountID = ?`;
+    let sql = `UPDATE Account SET ? WHERE AccountID = ?`;
     const { body, params } = req;
     const { accountId } = params;
-    if (!body.accountID) {
+    if (!body.AccountID) {
       res
         .status(400)
         .send({ status: "error", message: "AccountID vào không tồn tại." });
@@ -112,6 +109,11 @@ app
       }
     });
   });
+app.use("/auth", router);
+
+app.get("/profile", authMiddleware.isAuth, async (req, res) => {
+  res.send(req.user);
+});
 
 app.use("/auth", router);
 
