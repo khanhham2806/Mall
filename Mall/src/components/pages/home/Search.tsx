@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderRadius: 10,
+    height: 40,
   },
   textInput: {
     marginHorizontal: 10

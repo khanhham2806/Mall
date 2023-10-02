@@ -1,29 +1,45 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, ScrollView } from 'react-native';
-import { AuthContext } from '../../context/AuthContext';
-import { useContext } from 'react'
+import { useEffect, useState } from 'react'
 import { Avatar } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ListItem, Icon } from 'react-native-elements';
 const UserScreen = () => {
   const navigation: any = useNavigation()
-  const { userInfo } = useContext(AuthContext);
+  const [userInfo, setUserInfo] = useState<any>('');
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userInfo');
+      if (value !== null) {
+        const value1 = JSON.parse(value)
+        setUserInfo(value1.user)
+      }
+    } catch (e) {
+      console.log(e);
 
-
+    }
+  };
+  useEffect(() => {
+    getData()
+  }, [])
   return (
     <ScrollView style={styles.container}>
-      <ListItem onPress={() => navigation.navigate('UserInfo', { userInfo: userInfo.user })}>
-        <Avatar
-          rounded
-          size={50}
-          source={{ uri: userInfo.user.avatarImageName }}
-        />
+      <ListItem onPress={() => navigation.navigate('UserInfo', { userInfo: userInfo })}>
+        {userInfo ?
+          <Avatar
+            rounded
+            size={50}
+            source={{ uri: userInfo.avatarImageName }}
+          />
+          : null
+        }
         <ListItem.Content>
           <ListItem.Title style={{ fontWeight: "bold", fontSize: 18 }}>
-            {userInfo.user.fullName}
+            {userInfo.fullName}
           </ListItem.Title>
           <ListItem.Subtitle>
-            {userInfo.user.role}
+            {userInfo.role}
           </ListItem.Subtitle>
         </ListItem.Content>
         <Icon size={20} name="edit" type="antdesign" color="grey" />

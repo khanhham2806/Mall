@@ -11,24 +11,32 @@ export const AuthProvider = ({ children }) => {
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const login = (username, password) => {
-        setIsLoading(true);
-        axios.post(`${BASE_URL}/auth/login`, {
-            username,
-            password
+        if (username === '') {
+            console.log('Hãy điền tên đăng nhập');
+        } else if (password === '') {
+            console.log('Hãy điền mật khẩu!');
+        } else {
+            axios.post(`${BASE_URL}/auth/login`, {
+                username,
+                password
 
-        }).then(res => {
-            let userInfo = res.data;
-            console.log(userInfo);
-            setUserInfo(userInfo);
-            setUserToken(userInfo.accessToken)
-            AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-            AsyncStorage.setItem('userToken', userInfo.accessToken)
-            // console.log('User Token: ' + userInfo.accessToken);
-        }).catch(err => {
-            console.log(`login err ${err}`);
-        })
-        setIsLoading(false);
+            })
+                .then(res => {
+                    let userInfo = res.data;
+                    // console.log(userInfo);
+                    setUserInfo(userInfo);
+                    setUserToken(userInfo.accessToken)
+                    AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+                    AsyncStorage.setItem('userToken', userInfo.accessToken)
+                    // console.log('User Token: ' + userInfo.accessToken);
+                }).catch(err => {
+                    console.log(`login err ${err}`);
+                })
+
+            setIsLoading(false);
+        }
     }
+
     const logout = () => {
         setIsLoading(true)
         setUserToken(null);

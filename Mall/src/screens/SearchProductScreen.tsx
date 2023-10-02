@@ -1,45 +1,22 @@
 import * as React from 'react'
 import { Text, View, StyleSheet, Dimensions, ScrollView, FlatList } from 'react-native';
-import { useState, useEffect } from 'react';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
-import axios from 'axios';
 
 import BtnGoBack from '../components/button/BtnGoBack';
 import BtnGoCart from '../components/button/BtnGoCart';
 import ComponentProduct from '../components/pages/home/ComponentProduct';
-import { BASE_URL } from '../../config';
 import VND from '../function/VND';
 
 
 const width = Dimensions.get('screen').width * 0.43;
 const height = Dimensions.get('screen').height * 0.35;
 
-
 const SearchProductScreen = ({ route }: any) => {
   const navigation: any = useNavigation();
   let { data, searchQuery } = route.params;
-  const [productCart, setProductCart] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState(false)
-  const isFocused = useIsFocused();
+  // console.log(data);
 
-  // console.log('isloading', isLoading);
-  // const isFocused = useIsFocused();
-  useEffect(() => {
-    setIsLoading(true)
-    if (isFocused) {
-      getData()
-    }
-  }, [isLoading, isFocused])
-  const getData = async () => {
-    const res = await axios.get(`${BASE_URL}/cart`)
-    // console.log(res.data.data);
-    let dataCart = res && res.data ? res.data.data : [];
-    setProductCart(dataCart);
-    // setIsLoading(false)
-  }
-  const value = productCart.reduce((accumulator: any, item: any) => accumulator + item.productQuantity, 0)
-  // console.log(value);
   return (
     (data.length !== 0)
       ?
@@ -50,10 +27,10 @@ const SearchProductScreen = ({ route }: any) => {
             fontWeight: 'bold',
             fontSize: 18,
           }}>Searching for "{searchQuery}"</Text>
-          <BtnGoCart value={value} />
+          <BtnGoCart />
         </View>
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-          <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }]}>
+          <View style={[{ flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', rowGap: 20 }]}>
             {data.map((item: any) => {
               const arrLinkImage = item.productImageUrlEnd.split(',')
               return (
@@ -80,7 +57,7 @@ const SearchProductScreen = ({ route }: any) => {
             fontWeight: 'bold',
             fontSize: 18,
           }}>No Result</Text>
-          <BtnGoCart value={value} />
+          <BtnGoCart />
         </View>
         <View style={{ alignItems: 'center', marginTop: 200 }}>
           <Avatar size={100} source={require('../assets/images/noResult.png')} />

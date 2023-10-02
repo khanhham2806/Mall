@@ -12,9 +12,7 @@ const HomeScreen = ({ navigation }: any) => {
         {/* search */}
         <View style={styles.elementsHeaderContainer}>
           <Search />
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-            <BtnGoCart />
-          </View>
+          <BtnGoCart />
         </View>
 
         {/* banner */}
@@ -31,8 +29,8 @@ const HomeScreen = ({ navigation }: any) => {
         <View style={styles.elementsProductContainer} >
           <ListProduct />
         </View>
-      </ScrollView>
-    </View>
+      </ScrollView >
+    </View >
 
   );
 };
@@ -56,7 +54,7 @@ const styles = StyleSheet.create({
   elementsHeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 20
   },
   elementsProductContainer: {
     padding: 20,
