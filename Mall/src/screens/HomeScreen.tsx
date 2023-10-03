@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Search from '../components/pages/home/Search';
 import Slider from '../components/pages/home/Slider';
-import BtnGoCart from '../components/button/BtnGoCart';
 import ListCategory from '../components/pages/home/ListCategory';
 import ListProduct from '../components/pages/home/ListProduct';
-const HomeScreen = ({ navigation }: any) => {
+
+const HomeScreen = () => {
   return (
+
     <View style={styles.container}>
       <ScrollView nestedScrollEnabled={false} >
         {/* search */}
         <View style={styles.elementsHeaderContainer}>
           <Search />
-          <BtnGoCart />
         </View>
 
         {/* banner */}
@@ -33,6 +33,7 @@ const HomeScreen = ({ navigation }: any) => {
     </View >
 
   );
+
 };
 
 

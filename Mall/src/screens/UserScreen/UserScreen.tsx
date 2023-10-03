@@ -5,6 +5,7 @@ import { Avatar } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ListItem, Icon } from 'react-native-elements';
+
 const UserScreen = () => {
   const navigation: any = useNavigation()
   const [userInfo, setUserInfo] = useState<any>('');
@@ -12,8 +13,8 @@ const UserScreen = () => {
     try {
       const value = await AsyncStorage.getItem('userInfo');
       if (value !== null) {
-        const value1 = JSON.parse(value)
-        setUserInfo(value1.user)
+        const userInfo = JSON.parse(value)
+        setUserInfo(userInfo.user)
       }
     } catch (e) {
       console.log(e);
@@ -47,10 +48,16 @@ const UserScreen = () => {
       </ListItem>
 
       <View style={{ marginTop: 10 }}>
-        {/* {(userInfo.user.role == 'admin')
-          ? <CustomButton margin={10} onPress={handleAdmin} text='Admin' bgColor='#3669C9' txtColor='#ffffff' />
+        {(userInfo.role == 'admin')
+          ? <ListItem bottomDivider onPress={() => { navigation.navigate('Admin') }} >
+            <Icon size={20} name="admin-panel-settings" type="material" color="grey" />
+            <ListItem.Content>
+              <ListItem.Title>Admin</ListItem.Title>
+            </ListItem.Content>
+            <ListItem.Chevron />
+          </ListItem>
           : <></>
-        } */}
+        }
         <ListItem bottomDivider >
           <Icon size={20} name="ticket-outline" type="material-community" color="grey" />
           <ListItem.Content>

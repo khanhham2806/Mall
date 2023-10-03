@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import CustomButton from '../../components/button/CustomButton';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { Avatar } from 'react-native-elements';
-
-const Login = ({ navigation }: any) => {
+import { useNavigation } from '@react-navigation/native'
+const Login = () => {
+  const navigation: any = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,10 +23,9 @@ const Login = ({ navigation }: any) => {
 
   }
 
-  const { login } = useContext(AuthContext);
+  const { login, isLoading } = useContext(AuthContext);
 
   return (
-
     <ScrollView style={styles.container}>
 
       <View style={styles.viewContainer}>
@@ -42,7 +42,12 @@ const Login = ({ navigation }: any) => {
 
         </View>
 
-        <CustomButton margin={10} width='80%' onPress={handleOnPressLogin} text='Sign In' bgColor='#3669C9' txtColor='#ffffff' />
+        {(isLoading) ?
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size={'large'} />
+          </View> :
+          <CustomButton margin={10} width='80%' onPress={handleOnPressLogin} text='Sign In' bgColor='#3669C9' txtColor='#ffffff' />
+        }
         <View style={{ margin: 10, alignItems: 'center' }}>
           <TouchableOpacity><Text>Forgot Password</Text></TouchableOpacity>
           <Text style={{ margin: 10 }}>Or</Text>
@@ -60,7 +65,6 @@ const Login = ({ navigation }: any) => {
     </ScrollView>
 
 
-
   );
 };
 
@@ -68,7 +72,6 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'red'
   },
 
   viewContainer: {

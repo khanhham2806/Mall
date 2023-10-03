@@ -31,7 +31,7 @@ const ProductInfo = ({ route }: any) => {
                         <Text>Category</Text>
                         <Text>{item.productCategory}</Text>
                         <Text>Seller</Text>
-                        <Text>{item.seller}</Text>
+                        <Text>{item.sellerID}</Text>
 
                     </>
 

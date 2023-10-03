@@ -24,16 +24,19 @@ const AppStack = () => {
             <Stack.Screen name="WebViewScreen" component={WebViewScreen} />
             <Stack.Screen name='Cart' component={OrderScreen} />
             <Stack.Screen name='Chat' component={ChatScreen} />
-            <Stack.Screen name="ProductInfo" component={ProductInfoScreen} />
-            <Stack.Screen name="AllComments" component={AllCommentsScreen} />
             <Stack.Screen name="CategoryScreen" component={CategoryScreen} />
             <Stack.Screen name="SearchProduct" component={SearchProductScreen} />
+
+            <Stack.Screen name="ProductInfo" component={ProductInfoScreen} />
+            <Stack.Screen name="AllComments" component={AllCommentsScreen} />
+
             <Stack.Screen name="Admin" component={AdminScreen} />
             <Stack.Screen name="AdminProduct" component={Product} />
             <Stack.Screen name="AdminUser" component={Product} />
             <Stack.Screen name="AdminProductInfo" component={ProductInfo} />
-            <Stack.Screen name='Checkout' component={CheckoutScreen} />
+
             <Stack.Screen name='CheckoutAddress' component={CheckoutAddressScreen} />
+            <Stack.Screen name='Checkout' component={CheckoutScreen} />
             <Stack.Screen name='Settings' component={SettingsScreen} />
             <Stack.Screen name='UserInfo' component={UserInfoScreen} />
         </Stack.Navigator>

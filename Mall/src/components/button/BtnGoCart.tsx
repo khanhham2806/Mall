@@ -26,8 +26,10 @@ const BtnGoCart = ({ value }: any) => {
     const navigation: any = useNavigation()
     const hanldeGoCart = () => {
         navigation.navigate('Cart');
+
     }
     const status = 'error';
+
     return (
         <>
             <Pressable

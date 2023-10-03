@@ -22,13 +22,12 @@ import { useContext } from 'react';
 const CheckoutScreen = ({ route }: any) => {
 
     const { product } = route.params;
-    console.log(product);
-
+    // console.log(product);
     const navigation: any = useNavigation();
     const isFocused = useIsFocused();
     const [address, setAddress] = useState<any>({})
+    const total = product.reduce((result: any, item: any) => result + item.productActualPrice * item.productQuantity, 0)
 
-    const total = product.reduce((accumulator: any, item: any) => accumulator + item.productActualPrice * item.productQuantity, 0)
 
     const handleBuy = () => {
         navigation.navigate('Home')

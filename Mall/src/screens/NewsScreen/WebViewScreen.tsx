@@ -25,7 +25,6 @@ const WebViewScreen = ({ route }: any) => {
         originWhitelist={['*']}
         startInLoadingState={true}
       />
-      {/* <WebView source={{ uri: 'https://reactnative.dev/' }} />; */}
     </>
 
   )

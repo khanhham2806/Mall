@@ -8,9 +8,12 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [role, setRole] = useState('')
     const [isLoading, setIsLoading] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
+
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const login = (username, password) => {
+        // setIsLoading(true);
         if (username === '') {
             console.log('Hãy điền tên đăng nhập');
         } else if (password === '') {
@@ -19,7 +22,6 @@ export const AuthProvider = ({ children }) => {
             axios.post(`${BASE_URL}/auth/login`, {
                 username,
                 password
-
             })
                 .then(res => {
                     let userInfo = res.data;
@@ -28,12 +30,12 @@ export const AuthProvider = ({ children }) => {
                     setUserToken(userInfo.accessToken)
                     AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
                     AsyncStorage.setItem('userToken', userInfo.accessToken)
-                    // console.log('User Token: ' + userInfo.accessToken);
+                    // console.log('User Token: ' + userInfo.accessToken);  
+                    setIsLogin(true)
                 }).catch(err => {
-                    console.log(`login err ${err}`);
+                    setIsLoading(false)
                 })
-
-            setIsLoading(false);
+            setIsLoading(true);
         }
     }
 
@@ -43,19 +45,21 @@ export const AuthProvider = ({ children }) => {
         AsyncStorage.removeItem('userInfo')
         AsyncStorage.removeItem('userToken')
         setIsLoading(false);
+        setIsLogin(false)
     }
 
     const isLoggedIn = async () => {
         try {
-            setIsLoading(true);
             let userInfo = await AsyncStorage.getItem('userInfo');
             let userToken = await AsyncStorage.getItem('userToken');
             userInfo = JSON.parse(userInfo);
             if (userInfo) {
                 setUserToken(userToken);
                 setUserInfo(userInfo);
+                setIsLogin(true)
+                setIsLoading(false);
+
             }
-            setIsLoading(false);
         } catch (err) {
             console.log(`isLogged in err ${err}`);
         }
@@ -67,7 +71,7 @@ export const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ login, logout, userToken, userInfo }}>
+        <AuthContext.Provider value={{ login, logout, isLoading, isLogin, userToken, userInfo }}>
             {children}
         </AuthContext.Provider>
     )

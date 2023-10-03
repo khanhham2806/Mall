@@ -19,6 +19,7 @@ import store from '../../redux/store';
 
 const OrderScreen = ({ navigation }: any) => {
   const { userInfo } = useContext(AuthContext);
+  // console.log('>> render');
 
   const [checked, setChecked] = useState<any>([]);
   // const handleCheck = (cartID: number) => {
